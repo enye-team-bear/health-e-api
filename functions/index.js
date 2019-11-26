@@ -6,5 +6,10 @@ const app = express()
 
 app.use(cors())
 
+const { signupUser } = require('./controllers/user')
+
+//user Routes
+app.post('/signup', signupUser);
+
 exports.api = functions.https.onRequest(app);
 
