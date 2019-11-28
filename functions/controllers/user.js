@@ -1,6 +1,7 @@
-const { admin } = require("../util/admin");
+const { status, message } = require("../util/constants");
 const config = require("../util/config");
 const firebase = require("firebase");
+var HttpStatus = require('http-status-codes');
 require("firebase/firestore");
 firebase.initializeApp(config);
 
@@ -30,26 +31,23 @@ exports.signupUser = async (req, res) => {
 
   //validating input
   const { valid, errors } = validateSignUpData(newUser);
-  if (!valid) return res.status(400).json(errors);
+  if (!valid) return res.status(HttpStatus.PRECONDITION_FAILED).json({ status : status.error, message: errors});
 
   //creating custom image name for initial profile picture
   const defaultImg = "defaultImg.png";
-
-  //validating user
-  let token, userId;
   //ensuring user does not exist in db.. using unique username
   try {
     const docu = await db.doc(`/users/${newUser.userName}`).get()
       if (docu.exists) {
         return res
-          .status(400)
+          .status(HttpStatus.CONFLICT)
           .json({
-            status: "error",
-            message: "username already exists pick another"
+            status: status.error,
+            message: message.userNameExists
           });
       } else {
         const user = await firebase.auth().createUserWithEmailAndPassword(newUser.email, newUser.password);
-        userId = await user.user.uid
+        const userId = await user.user.uid
         const token = await user.user.getIdToken()
         const userDetails = {
           fullName,
@@ -62,16 +60,15 @@ exports.signupUser = async (req, res) => {
           createdAt: new Date().toISOString()
         };
         await db.doc(`/users/${newUser.userName}`).set(userDetails);
-        return res.status(201).json({ status: "success", token });
+        return res.status(HttpStatus.CREATED).json({ status: status.success, message: token });
       }
   }catch(err) {
-      console.log(err);
-      if (err.code === "auth/email-already-in-use") {
-        return res.status(400).json({ status: "error", message: "Email is Already in Use" });
+      if (err.code === message.auth_emailInUse) {
+        return res.status(HttpStatus.BAD_REQUEST).json({ status: status.error, message: message.emailInUse });
       } else {
         return res
-          .status(500)
-          .json({status: "error", message: "Something went wrong please try again" });
+          .status(HttpStatus.INTERNAL_SERVER_ERROR)
+          .json({status: status.error, message: message.somethingWentWrong });
       }
   };
 };
@@ -84,36 +81,36 @@ exports.loginUser = async (req, res) => {
 	};
 	const { errors, valid } = validateLoginData(user);
 	if (!valid)
-		return res.status(400).json({ status: "error", message: errors });
+		return res.status(HttpStatus.PRECONDITION_FAILED).json({ status: status.error, message: errors });
 
 	try {
 		const data1 = await firebase
 			.auth()
 			.signInWithEmailAndPassword(user.email, user.password);
 		const Token = await data1.user.getIdToken();
-		return res.status(200).json({ status: "success", Token });
+		return res.status(HttpStatus.OK).json({ status: status.success, message: Token });
 	} catch (err) {
 		console.log(err);
-		if (err.code === "auth/user-not-found") {
+		if (err.code === message.auth_userNotFound) {
 			return res
-				.status(200)
+				.status(HttpStatus.BAD_REQUEST)
 				.json({
-					status: "error",
-					message: "Wrong credentials Try Again"
+					status: status.error,
+					message: message.wrongCredentials
 				});
-		} else if (err.code === "auth/wrong-password") {
+		} else if (err.code === message.auth_wrongPassword) {
 			return res
 				.status(403)
 				.json({
-					status: "error",
-					message: "Wrong credentials Try Again"
+					status: status.error,
+					message: message.wrongCredentials
 				});
 		} else {
 			return res
-				.status(500)
+				.status(HttpStatus.INTERNAL_SERVER_ERROR)
 				.json({
-					status: "error",
-					message: "something went wrong, try again"
+					status: status.error,
+					message: message.somethingWentWrong
 				});
 		}
 	}

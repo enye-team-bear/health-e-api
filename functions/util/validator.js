@@ -1,3 +1,4 @@
+const {message} = require('./constants')
 const isEmpty = string => {
   if (string.trim() === "") return true;
   else return false;
@@ -10,21 +11,22 @@ const isEmail = email => {
 
 exports.validateSignUpData = data => {
   //input validation
-  let errors = {};
+  const errors = {};
+  const {password, confirmPassword, fullName, userName, number, userStatus, email} = data
 
-  if (isEmpty(data.email)) {
-    errors.email = "Must not be empty";
-  } else if (!isEmail(data.email)) {
-    errors.email = "Must be a valid email address";
+  if (isEmpty(email)) {
+    errors.email = message.mustNotBeEmpty;
+  } else if (!isEmail(email)) {
+    errors.email = message.mustBeValidEmail;
   }
 
-  if (isEmpty(data.password)) errors.password = "Must not be Empty";
-  if (data.password !== data.confirmPassword)
-    errors.confirmPassword = "Passwords must Match";
-  if (isEmpty(data.fullName)) errors.fullname = "Must not be Empty";
-  if (isEmpty(data.number)) errors.number = "Must not be Empty";
-  if (isEmpty(data.userName)) errors.userName = "Must not be Empty";
-  if (isEmpty(data.userStatus)) errors.userstatus = "Must not be Empty";
+  if (isEmpty(password)) errors.password = message.mustNotBeEmpty;
+  if (password !== confirmPassword)
+    errors.confirmPassword = message.passwordMustMatch;
+  if (isEmpty(fullName)) errors.fullname = message.mustNotBeEmpty;
+  if (isEmpty(number)) errors.number = message.mustNotBeEmpty;
+  if (isEmpty(userName)) errors.userName = message.mustNotBeEmpty;
+  if (isEmpty(userStatus)) errors.userstatus = message.mustNotBeEmpty;
 
   return {
     errors,
@@ -34,9 +36,14 @@ exports.validateSignUpData = data => {
 
 exports.validateLoginData = data => {
   let errors = {};
+  const {email, password} = data
 
-  if (isEmpty(data.email)) errors.email = "Must not be empty";
-  if (isEmpty(data.password)) errors.password = "Must not be empty";
+  if (isEmpty(email)) {
+    errors.email = message.mustNotBeEmpty;
+  }else if (!isEmail(D_email)) {
+    errors.email = message.mustBeValidEmail;
+  }
+  if (isEmpty(password)) errors.password = message.mustNotBeEmpty;
 
   return {
     errors,
