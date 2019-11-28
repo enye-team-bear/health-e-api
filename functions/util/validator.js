@@ -21,10 +21,22 @@ exports.validateSignUpData = data => {
   if (isEmpty(data.password)) errors.password = "Must not be Empty";
   if (data.password !== data.confirmPassword)
     errors.confirmPassword = "Passwords must Match";
-  if (isEmpty(data.fullname)) errors.fullname = "Must not be Empty";
+  if (isEmpty(data.fullName)) errors.fullname = "Must not be Empty";
   if (isEmpty(data.number)) errors.number = "Must not be Empty";
-  if (isEmpty(data.username)) errors.userName = "Must not be Empty";
-  if (isEmpty(data.userstatus)) errors.userstatus = "Must not be Empty";
+  if (isEmpty(data.userName)) errors.userName = "Must not be Empty";
+  if (isEmpty(data.userStatus)) errors.userstatus = "Must not be Empty";
+
+  return {
+    errors,
+    valid: Object.keys(errors).length === 0 ? true : false
+  };
+};
+
+exports.validateLoginData = data => {
+  let errors = {};
+
+  if (isEmpty(data.email)) errors.email = "Must not be empty";
+  if (isEmpty(data.password)) errors.password = "Must not be empty";
 
   return {
     errors,
