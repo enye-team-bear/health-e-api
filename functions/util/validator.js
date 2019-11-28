@@ -13,20 +13,21 @@ exports.validateSignUpData = data => {
   //input validation
   const errors = {};
   const {password, confirmPassword, fullName, userName, number, userStatus, email} = data
+  const { mustNotBeEmpty, passwordMustMatch, mustBeValidEmail } = message
 
   if (isEmpty(email)) {
-    errors.email = message.mustNotBeEmpty;
+    errors.email = mustNotBeEmpty;
   } else if (!isEmail(email)) {
-    errors.email = message.mustBeValidEmail;
+    errors.email =mustBeValidEmail;
   }
 
-  if (isEmpty(password)) errors.password = message.mustNotBeEmpty;
+  if (isEmpty(password)) errors.password = mustNotBeEmpty;
   if (password !== confirmPassword)
-    errors.confirmPassword = message.passwordMustMatch;
-  if (isEmpty(fullName)) errors.fullname = message.mustNotBeEmpty;
-  if (isEmpty(number)) errors.number = message.mustNotBeEmpty;
-  if (isEmpty(userName)) errors.userName = message.mustNotBeEmpty;
-  if (isEmpty(userStatus)) errors.userstatus = message.mustNotBeEmpty;
+    errors.confirmPassword = passwordMustMatch;
+  if (isEmpty(fullName)) errors.fullname = mustNotBeEmpty;
+  if (isEmpty(number)) errors.number = mustNotBeEmpty;
+  if (isEmpty(userName)) errors.userName = mustNotBeEmpty;
+  if (isEmpty(userStatus)) errors.userstatus = mustNotBeEmpty;
 
   return {
     errors,
@@ -37,13 +38,14 @@ exports.validateSignUpData = data => {
 exports.validateLoginData = data => {
   let errors = {};
   const {email, password} = data
+  const { mustBeValidEmail, mustNotBeEmpty } = message
 
   if (isEmpty(email)) {
-    errors.email = message.mustNotBeEmpty;
+    errors.email = mustNotBeEmpty;
   }else if (!isEmail(D_email)) {
-    errors.email = message.mustBeValidEmail;
+    errors.email = mustBeValidEmail;
   }
-  if (isEmpty(password)) errors.password = message.mustNotBeEmpty;
+  if (isEmpty(password)) errors.password = mustNotBeEmpty;
 
   return {
     errors,
