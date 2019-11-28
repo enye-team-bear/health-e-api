@@ -42,7 +42,7 @@ exports.validateLoginData = data => {
 
   if (isEmpty(email)) {
     errors.email = mustNotBeEmpty;
-  }else if (!isEmail(D_email)) {
+  }else if (!isEmail(email)) {
     errors.email = mustBeValidEmail;
   }
   if (isEmpty(password)) errors.password = mustNotBeEmpty;
