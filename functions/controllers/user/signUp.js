@@ -27,7 +27,7 @@ const signupUser = async (req, res, db) => {
     const {
       somethingWentWrong,
       emailInUse,
-      auth_emailInUse,
+      authEmailInUse,
       userNameExists
     } = message;
     const {
@@ -72,11 +72,11 @@ const signupUser = async (req, res, db) => {
           createdAt: new Date().toISOString()
         };
         await db.doc(`/users/${newUser.userName}`).set(userDetails);
-        return res.status(CREATED).json({ status: success, message: token });
+        return res.status(CREATED).json({ status: success, data: token });
       }
     } catch (err) {
       console.log(err)
-      if (err.code === auth_emailInUse) {
+      if (err.code === authEmailInUse) {
         return res
           .status(BAD_REQUEST)
           .json({ status: error, message: emailInUse });

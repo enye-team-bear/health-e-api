@@ -1,7 +1,7 @@
 const firebase = require("firebase");
 const { validateLoginData } = require("../../util/validator");
 const { status, message } = require("../../util/constants");
-var HttpStatus = require("http-status-codes");
+const HttpStatus = require("http-status-codes");
 
 const loginUser = async (req, res, db ) => {
     const { email, password } = req.body;
@@ -13,8 +13,8 @@ const loginUser = async (req, res, db ) => {
     const {
       somethingWentWrong,
       wrongCredentials,
-      auth_userNotFound,
-      auth_wrongPassword,
+      authUserNotFound,
+      authWrongPassword,
     } = message;
     const {
       PRECONDITION_FAILED,
@@ -34,14 +34,14 @@ const loginUser = async (req, res, db ) => {
         .auth()
         .signInWithEmailAndPassword(user.email, user.password);
       const Token = await userData.user.getIdToken();
-      return res.status(OK).json({ status: success, message: Token });
+      return res.status(OK).json({ status: success, data: Token });
     } catch (err) {
-      if (err.code === auth_userNotFound) {
+      if (err.code === authUserNotFound) {
         return res.status(BAD_REQUEST).json({
           status: error,
           message: wrongCredentials
         });
-      } else if (err.code === auth_wrongPassword) {
+      } else if (err.code === authWrongPassword) {
         return res.status(BAD_REQUEST).json({
           status: error,
           message: wrongCredentials
