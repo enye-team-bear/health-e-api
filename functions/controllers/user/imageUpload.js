@@ -1,5 +1,5 @@
 const Busboy = require('busboy')
-const path = require('path'),
+const path = require('path')
 const os = require('os');
 const fs = require('fs')
 const config = require('../../util/config')
@@ -7,10 +7,13 @@ const { admin } = require('../../util/admin')
 const { status, message } = require("../../util/constants");
 var HttpStatus = require("http-status-codes");
 
+config.storageBucket
+
 const imageUpload = async (req, res, db) => {
     const { BAD_REQUEST, OK, INTERNAL_SERVER_ERROR } = HttpStatus
     const { error, success } = status
     const { wrongFileSubmitted, somethingWentWrong, imageUpdateSucces } = message
+
     const busboy = new Busboy({headers: req.headers});
     let imageFileName
     let imageToBeUploaded = {};
@@ -27,7 +30,7 @@ const imageUpload = async (req, res, db) => {
     });
     await busboy.on('finish', () => {
         try {
-            await admin.storage().bucket().upload(imageToBeUploaded.filePath, {
+            admin.storage().bucket().upload(imageToBeUploaded.filePath, {
                 resumable: false,
                 metadata: {
                     metadata: {
@@ -36,9 +39,10 @@ const imageUpload = async (req, res, db) => {
                 }
             })
             const imageUrl = `https://firebasestorage.googleapis.com/v0/b/${config.storageBucket}/o/${imageFileName}?alt=media`;
-            await db.doc(`/users/${req.user.userName}`).update({ imageUrl })
+            db.doc(`/users/${req.user.userName}`).update({ imageUrl })
             return res.status(OK).json({status: success, data: imageUpdateSucces})
-        } catch (error) {
+        } catch (err) {
+            console.log(err)
             return res.status(INTERNAL_SERVER_ERROR).json({status: error, message: somethingWentWrong})
         }
     })
