@@ -14,5 +14,7 @@ exports.message = {
     wrongCredentials : "Wrong credentials Try Again",
     mustNotBeEmpty: "Must not be Empty",
     mustBeValidEmail: "Must be a valid email address",
-    passwordMustMatch: "Passwords must Match"
+    passwordMustMatch: "Passwords must Match",
+    wrongFileSubmitted: "Wrong file type submitted",
+    imageUpdateSucces: 'image Uploaded successfully'
 }
