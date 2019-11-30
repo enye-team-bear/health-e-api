@@ -5,7 +5,7 @@ const fs = require('fs')
 const config = require('../../util/config')
 const { admin } = require('../../util/admin')
 const { status, message } = require("../../util/constants");
-var HttpStatus = require("http-status-codes");
+const HttpStatus = require("http-status-codes");
 
 config.storageBucket
 
@@ -17,9 +17,11 @@ const imageUpload = async (req, res, db) => {
     const busboy = new Busboy({headers: req.headers});
     let imageFileName
     let imageToBeUploaded = {};
+    const IMAGE_JPEG = 'image/jpeg'
+    const IMAGE_PNG = 'image/png'
 
     await busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
-        if(mimetype !== 'image/jpeg' && mimetype !== 'image/png'){
+        if(mimetype !== IMAGE_JPEG && mimetype !== IMAGE_PNG){
           return res.status(BAD_REQUEST).json({status: error, message: wrongFileSubmitted})
         }
         const imageExtension = filename.split('.')[filename.split('.').length - 1];

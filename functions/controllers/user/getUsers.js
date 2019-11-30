@@ -1,5 +1,5 @@
 const { status, message } = require("../../util/constants");
-var HttpStatus = require("http-status-codes");
+const HttpStatus = require("http-status-codes");
 
 const getAllUser = async (req, res, db) => {
     const { BAD_REQUEST, OK, INTERNAL_SERVER_ERROR } = HttpStatus
@@ -9,7 +9,7 @@ const getAllUser = async (req, res, db) => {
     try {
         let user = []
         const users = await db.collection('users').get()
-        if(!users) return res.status(BAD_REQUEST).json({ status: "error", message: somethingWentWrong})
+        if(!users) return res.status(BAD_REQUEST).json({ status: error, message: somethingWentWrong})
         users.forEach(doc => {
             const {createdAt, email, fullName, imageUrl, number, userId, userName, userStatus} = doc.data()
             user.push({

@@ -9,7 +9,7 @@ firebase.initializeApp(config);
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://health-e-api.firebaseio.com"
+  databaseURL: config.databaseURL
 });
 
 
