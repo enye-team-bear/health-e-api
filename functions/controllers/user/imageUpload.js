@@ -27,10 +27,10 @@ const imageUpload = async (req, res, db) => {
         const filePath = path.join(os.tmpdir(), imageFileName);
         imageToBeUploaded = {filePath, mimetype};
         file.pipe(fs.createWriteStream(filePath));
-    });
-    await busboy.on('finish', () => {
+    })
+    busboy.on('finish', () => {
         try {
-            admin.storage().bucket().upload(imageToBeUploaded.filePath, {
+            admin.storage().bucket(config.storageBucket).upload(imageToBeUploaded.filePath, {
                 resumable: false,
                 metadata: {
                     metadata: {
