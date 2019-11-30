@@ -1,5 +1,5 @@
-const { status, message } = require("../../util/constants");
-const HttpStatus = require("http-status-codes");
+const { status, message } = require('../../util/constants');
+const HttpStatus = require('http-status-codes');
 
 const getAllUser = async (req, res, db) => {
     const { BAD_REQUEST, OK, INTERNAL_SERVER_ERROR } = HttpStatus

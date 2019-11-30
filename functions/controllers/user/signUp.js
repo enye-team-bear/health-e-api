@@ -1,8 +1,8 @@
-const firebase = require("firebase");
-const config = require("../../util/config");
-const { validateSignUpData} = require("../../util/validator");
-const { status, message } = require("../../util/constants");
-var HttpStatus = require("http-status-codes");
+const firebase = require('firebase');
+const config = require('../../util/config');
+const { validateSignUpData} = require('../../util/validator');
+const { status, message } = require('../../util/constants');
+var HttpStatus = require('http-status-codes');
 
 const signupUser = async (req, res, db) => {
     const {
@@ -46,7 +46,7 @@ const signupUser = async (req, res, db) => {
         .json({ status: error, message: errors });
   
     //creating custom image name for initial profile picture
-    const defaultImg = "defaultImg.png";
+    const defaultImg = 'defaultImg.png';
     //ensuring user does not exist in db.. using unique username
     try {
       const docu = await db.doc(`/users/${newUser.userName}`).get();

@@ -4,8 +4,8 @@ const os = require('os');
 const fs = require('fs')
 const config = require('../../util/config')
 const { admin } = require('../../util/admin')
-const { status, message } = require("../../util/constants");
-const HttpStatus = require("http-status-codes");
+const { status, message } = require('../../util/constants');
+const HttpStatus = require('http-status-codes');
 
 config.storageBucket
 

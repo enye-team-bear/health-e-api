@@ -1,8 +1,8 @@
-const admin = require("firebase-admin");
-const firebase = require("firebase");
-var serviceAccount = require("./health-e-api-firebase-adminsdk-phgu4-85eb5aeb08.json");
-require("firebase/firestore");
-const config = require("./config");
+const admin = require('firebase-admin');
+const firebase = require('firebase');
+var serviceAccount = require('./health-e-api-firebase-adminsdk-phgu4-85eb5aeb08.json');
+require('firebase/firestore');
+const config = require('./config');
 
 
 firebase.initializeApp(config);

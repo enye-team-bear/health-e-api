@@ -1,7 +1,7 @@
-const firebase = require("firebase");
-const { validateLoginData } = require("../../util/validator");
-const { status, message } = require("../../util/constants");
-const HttpStatus = require("http-status-codes");
+const firebase = require('firebase');
+const { validateLoginData } = require('../../util/validator');
+const { status, message } = require('../../util/constants');
+const HttpStatus = require('http-status-codes');
 
 const loginUser = async (req, res, db ) => {
     const { email, password } = req.body;

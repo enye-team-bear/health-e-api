@@ -11,24 +11,23 @@ module.exports = async (req, res, next) => {
    try {
     if (
         req.headers.authorization &&
-        req.headers.authorization.startsWith("Bearer ")
+        req.headers.authorization.startsWith('Bearer ')
       ) {
-        idToken = req.headers.authorization.split("Bearer ")[1];
+        idToken = req.headers.authorization.split('Bearer ')[1];
       } else {
         return res.status(UNAUTHORIZED).json({ status: fail, message:  unAuthorized});
       }
       const decodedToken = await admin.auth().verifyIdToken(idToken)
         req.user = decodedToken;
         const user = await db
-          .collection("users")
-          .where("userId", "==", decodedToken.uid)
+          .collection('users')
+          .where('userId', '==', decodedToken.uid)
           .limit(1)
           .get();
         req.user.userName = user.docs[0].data().userName
         req.user.imageUrl = user.docs[0].data().imageUrl;
         return next()
    } catch(err) {
-    console.error("Error while verifying token", err);
     return res.status(unAuthorized).json({status: error, message: somethingWentWrong});
    }
 }
