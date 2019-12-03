@@ -17,13 +17,6 @@ const {
     BAD_REQUEST,
     OK,
 } = HttpStatus;
-
-const user = {
-    1: 2,
-    3: 4,
-    5: 6,
-};
-
 const login = async (req, res) => {
     const { email, password } = req.body;
     try {
@@ -31,7 +24,6 @@ const login = async (req, res) => {
             .auth()
             .signInWithEmailAndPassword(email, password);
         const Token = await userData.user.getIdToken();
-        console.log({ ..._.pick(user, ['1', '2']) });
         return res.status(OK).json({ data: Token, status: success });
     } catch (err) {
         return res.status(INTERNAL_SERVER_ERROR).json({
