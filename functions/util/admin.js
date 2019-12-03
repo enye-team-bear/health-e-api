@@ -1,17 +1,22 @@
 const admin = require('firebase-admin');
 const firebase = require('firebase');
-var serviceAccount = require('./health-e-api-firebase-adminsdk-phgu4-85eb5aeb08.json');
+const serviceAccount = require('../../../../serviceAccount.json');
 require('firebase/firestore');
-const config = require('./config');
 
-
-firebase.initializeApp(config);
-
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: config.databaseURL
+firebase.initializeApp({
+    apiKey: process.env.API_KEY,
+    appId: process.env.APP_ID,
+    authDomain: process.env.AUTH_DOMAIN,
+    databaseURL: process.env.DATABASE_URL,
+    messagingSenderId: process.env.MESSAGING_SENDER_ID,
+    projectId: process.env.PROJECT_ID,
+    storageBucket: process.env.STORAGE_BUCKET,
 });
 
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: process.env.DATABASE_URL,
+});
 
 const db = firebase.firestore();
 

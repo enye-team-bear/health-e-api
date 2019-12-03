@@ -1,21 +1,29 @@
 exports.status = {
-    error : 'error',
+    error: 'error',
+    fail: 'fail',
     success: 'success',
-    fail: 'fail'
-}
+};
 
 exports.message = {
-    userNameExists : 'username already exists pick another',
-    emailInUse: 'Email is Already in Use',
-    somethingWentWrong: 'Something went wrong please try again',
     authEmailInUse: 'auth/email-already-in-use',
     authUserNotFound: 'auth/user-not-found',
-    authWrongPassword : 'auth/wrong-password',
-    wrongCredentials : 'Wrong credentials Try Again',
-    mustNotBeEmpty: 'Must not be Empty',
-    mustBeValidEmail: 'Must be a valid email address',
-    passwordMustMatch: 'Passwords must Match',
-    wrongFileSubmitted: 'Wrong file type submitted',
+    authWrongPassword: 'auth/wrong-password',
+    emailInUse: 'Email is Already in Use',
     imageUpdateSucces: 'image Uploaded successfully',
-    unAuthorized: 'UnAuthorized'
-}
+    mustBeValidEmail: 'Must be a valid email address',
+    mustNotBeEmpty: 'Must not be Empty',
+    passwordMustMatch: 'Passwords must Match',
+    somethingWentWrong: 'Something went wrong please try again',
+    unAuthorized: 'UnAuthorized',
+    userNameExists: 'username already exists pick another',
+    wrongCredentials: 'Wrong credentials Try Again',
+    wrongFileSubmitted: 'Wrong file type submitted',
+};
+
+exports.configConstants = {
+    IMAGE_JPEG: 'image/jpeg',
+    IMAGE_PNG: 'image/png',
+    defaultImg: 'defaultImg.png',
+    user: 'user',
+    userId: 'userId',
+};
