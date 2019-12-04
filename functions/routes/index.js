@@ -10,7 +10,7 @@ const {
 // user Routes
 router.post('/signup', signUp);
 router.post('/login', login);
-router.post('/user/image', authGuard, image);
+router.put('/user/image', authGuard, image);
 router.get('/users', getAll);
 
 module.exports = router;
