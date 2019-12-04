@@ -24,8 +24,8 @@ const imageUrl = `https://firebasestorage.googleapis.com/v0/b/${process.env.STOR
 
 const storeUser = async (req, res, db, userId, token) => {
     const {
- email, number, userStatus, userName, fullName 
-} = req.body;
+        email, number, userStatus, userName, fullName,
+    } = req.body;
     await db.doc(`/users/${userName}`).set({
         createdAt: new Date().toISOString(),
         email,
