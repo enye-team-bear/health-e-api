@@ -1,26 +1,66 @@
 {
-  "name": "functions",
-  "description": "Cloud Functions for Firebase",
+  "name": "project-template",
+  "version": "1.0.0",
+  "description": "Template for starting a project",
+  "main": "index.js",
   "scripts": {
-    "serve": "firebase serve --only functions",
-    "shell": "firebase functions:shell",
-    "start": "npm run shell",
-    "deploy": "firebase deploy --only functions",
-    "logs": "firebase functions:log"
+    "test": "echo \"Error: no test specified\" && exit 0",
+    "lint": "eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/enyeInc/project-template.git"
+  },
+  "author": "Uche Nnadi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/enyeInc/project-template/issues"
+  },
+  "homepage": "https://github.com/enyeInc/project-template#readme",
+  "devDependencies": {
+    "babel-eslint": "^10.0.1",
+    "enzyme": "^3.9.0",
+    "eslint": "^5.8.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-node": "^7.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-react": "^7.11.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "jest": "^24.7.1",
+    "supertest": "4.0.2"
   },
   "engines": {
     "node": "8"
   },
   "dependencies": {
+    "busboy": "^0.3.1",
     "cors": "^2.8.5",
-    "express": "^4.17.1",
+    "dotenv": "^7.0.0",
+    "express": "^4.16.4",
     "firebase": "^7.5.0",
-    "firebase-admin": "^8.6.0",
+    "firebase-admin": "^8.8.0",
     "firebase-functions": "^3.3.0",
-    "http-status-codes": "^1.4.0"
+    "http-status-codes": "^1.4.0",
+    "lodash": "^4.17.15",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "redux": "^4.0.1",
+    "redux-saga": "^1.0.2"
   },
-  "devDependencies": {
-    "firebase-functions-test": "^0.1.6"
-  },
-  "private": true
+  "keywords": [],
+  "importSort": {
+    ".js, .jsx, .es6, .es": {
+      "parser": "babylon",
+      "style": "eslint",
+      "options": {}
+    },
+    ".ts, .tsx": {
+      "parser": "typescript",
+      "style": "eslint",
+      "options": {}
+    }
+  }
 }

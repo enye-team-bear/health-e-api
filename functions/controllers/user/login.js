@@ -1,60 +1,74 @@
-const firebase = require("firebase");
-const { validateLoginData } = require("../../util/validator");
-const { status, message } = require("../../util/constants");
-const HttpStatus = require("http-status-codes");
+const firebase = require('firebase');
+const HttpStatus = require('http-status-codes');
+const _ = require('lodash');
+const { validateLoginData } = require('../../util/validator');
+const { status, message } = require('../../util/constants');
 
-const loginUser = async (req, res, db ) => {
+const { error, success } = status;
+const {
+    somethingWentWrong,
+    wrongCredentials,
+    authUserNotFound,
+    authWrongPassword,
+} = message;
+const {
+    PRECONDITION_FAILED,
+    INTERNAL_SERVER_ERROR,
+    BAD_REQUEST,
+    OK,
+} = HttpStatus;
+const login = async (req, res) => {
     const { email, password } = req.body;
-    const user = {
-      email,
-      password
-    };
-    const { error, success } = status;
-    const {
-      somethingWentWrong,
-      wrongCredentials,
-      authUserNotFound,
-      authWrongPassword,
-    } = message;
-    const {
-      PRECONDITION_FAILED,
-      INTERNAL_SERVER_ERROR,
-      BAD_REQUEST,
-      OK,
-    } = HttpStatus;
-
-    const { errors, valid } = validateLoginData(user);
-    if (!valid)
-      return res
-        .status(PRECONDITION_FAILED)
-        .json({ status: error, message: errors });
-  
     try {
-      const userData = await firebase
-        .auth()
-        .signInWithEmailAndPassword(user.email, user.password);
-      const Token = await userData.user.getIdToken();
-      return res.status(OK).json({ status: success, data: Token });
+        const userData = await firebase
+            .auth()
+            .signInWithEmailAndPassword(email, password);
+        const Token = await userData.user.getIdToken();
+        return res.status(OK).json({ data: Token, status: success });
     } catch (err) {
-      if (err.code === authUserNotFound) {
-        return res.status(BAD_REQUEST).json({
-          status: error,
-          message: wrongCredentials
-        });
-      } else if (err.code === authWrongPassword) {
-        return res.status(BAD_REQUEST).json({
-          status: error,
-          message: wrongCredentials
-        });
-      } else {
         return res.status(INTERNAL_SERVER_ERROR).json({
-          status: error,
-          message: somethingWentWrong
+            message: somethingWentWrong,
+            status: error,
         });
-      }
     }
-  };
+};
 
-  module.exports = {
-      loginUser
-  }
+const errorsReturn = (res, err) => {
+    if (err.code === authUserNotFound) {
+        return res.status(BAD_REQUEST).json({
+            message: wrongCredentials,
+            status: error,
+        });
+    }
+    if (err.code === authWrongPassword) {
+        return res.status(BAD_REQUEST).json({
+            message: wrongCredentials,
+            status: error,
+        });
+    }
+    return res.status(INTERNAL_SERVER_ERROR).json({
+        message: somethingWentWrong,
+        status: error,
+    });
+};
+
+const loginUser = async (req, res) => {
+    const { errors, valid } = validateLoginData(
+        _.pick(req.body, ['email', 'password']),
+    );
+    if (!valid) {
+        return res
+            .status(PRECONDITION_FAILED)
+            .json({ message: errors, status: error });
+    }
+
+    try {
+        return login(req, res);
+    } catch (err) {
+        return errorsReturn(res, err);
+    }
+};
+
+module.exports = {
+    loginUser,
+};

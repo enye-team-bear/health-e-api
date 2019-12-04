@@ -1,16 +1,16 @@
-const functions = require('firebase-functions');
-const express = require('express');
 const cors = require('cors');
+const dotenv = require('dotenv');
+const express = require('express');
+const functions = require('firebase-functions');
 
-const app = express()
+dotenv.config();
 
-app.use(cors())
+const app = express();
 
-const { loginUser, signUpUser } = require('./controllers/user/index')
+const userRoute = require('./routes/index');
 
-//user Routes
-app.post('/signup', signUpUser);
-app.post('/login', loginUser);
+app.use(cors());
+
+app.use('/', userRoute);
 
 exports.api = functions.https.onRequest(app);
-

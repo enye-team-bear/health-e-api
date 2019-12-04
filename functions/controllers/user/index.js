@@ -1,21 +1,17 @@
-const config = require("../../util/config");
-const firebase = require("firebase");
-require("firebase/firestore");
-firebase.initializeApp(config);
-const { signupUser }= require('./signUp');
-const { loginUser } = require('./login')
+const { db } = require('../../util/admin');
+const { signupUser } = require('./signUp');
+const { loginUser } = require('./login');
+const { imageUpload } = require('./imageUpload');
+const { getAllUser } = require('./getUsers');
 
-const db = firebase.firestore();
-
-const loginUser = (req, res) => loginUser(req, res, db );
-const signUpUser = (req, res) => signupUser(req, res, db);
+const login = (req, res) => loginUser(req, res, db);
+const signUp = (req, res) => signupUser(req, res, db);
+const image = (req, res) => imageUpload(req, res, db);
+const getAll = (req, res) => getAllUser(req, res, db);
 
 module.exports = {
-    loginUser,
-    signUpUser
-}
-
-
-
-
-
+    getAll,
+    image,
+    login,
+    signUp,
+};

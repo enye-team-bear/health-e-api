@@ -1,93 +1,102 @@
-const firebase = require("firebase");
-const config = require("../../util/config");
-const { validateSignUpData} = require("../../util/validator");
-const { status, message } = require("../../util/constants");
-var HttpStatus = require("http-status-codes");
+/* eslint-disable max-len */
+const firebase = require('firebase');
+const _ = require('lodash');
+const HttpStatus = require('http-status-codes');
+const { validateSignUpData } = require('../../util/validator');
+const { configConstants, status, message } = require('../../util/constants');
 
-const signupUser = async (req, res, db) => {
+const { error, success } = status;
+const {
+    somethingWentWrong,
+    emailInUse,
+    authEmailInUse,
+    userNameExists,
+} = message;
+const { defaultImg } = configConstants;
+const {
+    PRECONDITION_FAILED,
+    INTERNAL_SERVER_ERROR,
+    BAD_REQUEST,
+    CREATED,
+    CONFLICT,
+} = HttpStatus;
+const imageUrl = `https://firebasestorage.googleapis.com/v0/b/${process.env.STORAGE_BUCKET}/o/${defaultImg}?alt=media`;
+
+const storeUser = async (req, res, db, userId, token) => {
     const {
-      fullName,
-      userName,
-      email,
-      number,
-      password,
-      confirmPassword,
-      userStatus
-    } = req.body;
-    const newUser = {
-      fullName,
-      userName,
-      email,
-      number,
-      password,
-      confirmPassword,
-      userStatus
-    };
-    const { error, success } = status;
-    const {
-      somethingWentWrong,
-      emailInUse,
-      authEmailInUse,
-      userNameExists
-    } = message;
-    const {
-      PRECONDITION_FAILED,
-      INTERNAL_SERVER_ERROR,
-      BAD_REQUEST,
-      CREATED,
-      CONFLICT
-    } = HttpStatus;
-  
-    //validating input
-    const { valid, errors } = validateSignUpData(newUser);
-    if (!valid)
-      return res
-        .status(PRECONDITION_FAILED)
-        .json({ status: error, message: errors });
-  
-    //creating custom image name for initial profile picture
-    const defaultImg = "defaultImg.png";
-    //ensuring user does not exist in db.. using unique username
-    try {
-      const docu = await db.doc(`/users/${newUser.userName}`).get();
-      if (docu.exists) {
-        return res.status(CONFLICT).json({
-          status: error,
-          message: userNameExists
-        });
-      } else {
-        const user = await firebase
-          .auth()
-          .createUserWithEmailAndPassword(newUser.email, newUser.password);
-        const userId = await user.user.uid;
-        const token = await user.user.getIdToken();
-        const userDetails = {
-          fullName,
-          userName,
-          email,
-          number,
-          userStatus,
-          imageUrl: `https://firebasestorage.googleapis.com/v0/b/${config.storageBucket}/o/${defaultImg}?alt=media`,
-          userId,
-          createdAt: new Date().toISOString()
-        };
-        await db.doc(`/users/${newUser.userName}`).set(userDetails);
-        return res.status(CREATED).json({ status: success, data: token });
-      }
-    } catch (err) {
-      console.log(err)
-      if (err.code === authEmailInUse) {
+ email, number, userStatus, userName, fullName 
+} = req.body;
+    await db.doc(`/users/${userName}`).set({
+        createdAt: new Date().toISOString(),
+        email,
+        fullName,
+        imageUrl,
+        number,
+        userId,
+        userName,
+        userStatus,
+    });
+    return res.status(CREATED).json({ data: token, status: success });
+};
+
+const createUser = async (req, res, db) => {
+    const { email, password } = req.body;
+    const user = await firebase
+        .auth()
+        .createUserWithEmailAndPassword(email, password);
+    const userId = await user.user.uid;
+    const token = await user.user.getIdToken();
+    storeUser(req, res, db, userId, token);
+};
+
+const errorsReturn = (res, err) => {
+    if (err.code === authEmailInUse) {
         return res
-          .status(BAD_REQUEST)
-          .json({ status: error, message: emailInUse });
-      } else {
-        return res
-          .status(INTERNAL_SERVER_ERROR)
-          .json({ status: error, message: somethingWentWrong });
-      }
+            .status(BAD_REQUEST)
+            .json({ message: emailInUse, status: error });
     }
-  };
+    return res
+        .status(INTERNAL_SERVER_ERROR)
+        .json({ message: somethingWentWrong, status: error });
+};
 
-  module.exports = {
-    signupUser
-  }
+const validateCode = (req, res) => {
+    // validating input
+    const { valid, errors } = validateSignUpData(
+        _.pick(req.body, [
+            'fullName',
+            'userName',
+            'email',
+            'number',
+            'password',
+            'confirmPassword',
+            'userStatus',
+        ]),
+    );
+    if (!valid) {
+        return res
+            .status(PRECONDITION_FAILED)
+            .json({ message: errors, status: error });
+    }
+};
+const signupUser = async (req, res, db) => {
+    validateCode(req, res);
+    // ensuring user does not exist in db.. using unique username
+    try {
+        // i used req.body.userName instead of destructuring because it is the only thing i am getting from req
+        const docu = await db.doc(`/users/${req.body.userName}`).get();
+        if (docu.exists) {
+            return res.status(CONFLICT).json({
+                message: userNameExists,
+                status: error,
+            });
+        }
+        return createUser(req, res, db);
+    } catch (err) {
+        return errorsReturn(res, err);
+    }
+};
+
+module.exports = {
+    signupUser,
+};
