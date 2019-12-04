@@ -24,6 +24,12 @@ To lint the code run:
 ```
 npm run lint
 ```
+
+
+```
+npm run lint -- --fix
+```
+fix all LF to CRF linting errors
 If you don't get any output that means your linting passed.
 
 ## Additional Resources
