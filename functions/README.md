@@ -34,6 +34,9 @@ If you don't get any output that means your linting passed.
 
 ## Authors
 
-* **YOUR NAME** - *Initial work*
+Team Bear - *Initial work*
 
 > TODO: Put your name on the list.
+Moses
+Gideon
+Retzam
