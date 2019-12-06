@@ -1,8 +1,7 @@
 /* eslint-disable max-len */
 const firebase = require('firebase');
-const _ = require('lodash');
 const HttpStatus = require('http-status-codes');
-const { validateSignUpData } = require('../../util/validator');
+const { validateCode } = require('../../util/validator');
 const { configConstants, status, message } = require('../../util/constants');
 
 const { error, success } = status;
@@ -14,7 +13,6 @@ const {
 } = message;
 const { defaultImg } = configConstants;
 const {
-    PRECONDITION_FAILED,
     INTERNAL_SERVER_ERROR,
     BAD_REQUEST,
     CREATED,
@@ -41,12 +39,16 @@ const storeUser = async (req, res, db, userId, token) => {
 
 const createUser = async (req, res, db) => {
     const { email, password } = req.body;
+    // try {
     const user = await firebase
         .auth()
         .createUserWithEmailAndPassword(email, password);
     const userId = await user.user.uid;
     const token = await user.user.getIdToken();
     storeUser(req, res, db, userId, token);
+    // } catch (e) {
+    //    console.log(e);
+    // }
 };
 
 const errorsReturn = (res, err) => {
@@ -58,26 +60,6 @@ const errorsReturn = (res, err) => {
     return res
         .status(INTERNAL_SERVER_ERROR)
         .json({ message: somethingWentWrong, status: error });
-};
-
-const validateCode = (req, res) => {
-    // validating input
-    const { valid, errors } = validateSignUpData(
-        _.pick(req.body, [
-            'fullName',
-            'userName',
-            'email',
-            'number',
-            'password',
-            'confirmPassword',
-            'userStatus',
-        ]),
-    );
-    if (!valid) {
-        return res
-            .status(PRECONDITION_FAILED)
-            .json({ message: errors, status: error });
-    }
 };
 const signupUser = async (req, res, db) => {
     validateCode(req, res);

@@ -14,6 +14,7 @@ exports.message = {
     mustNotBeEmpty: 'Must not be Empty',
     passwordMustMatch: 'Passwords must Match',
     somethingWentWrong: 'Something went wrong please try again',
+    topicExists: 'Topic already exist',
     unAuthorized: 'UnAuthorized',
     userNameExists: 'username already exists pick another',
     wrongCredentials: 'Wrong credentials Try Again',
