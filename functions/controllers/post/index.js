@@ -1,11 +1,11 @@
 const { db } = require('../../util/admin');
-const { addTopic } = require('./newTopic');
-const { getAllTopics } = require('./getTopic');
+const { addPost } = require('./newPost');
+const { getAllPosts } = require('./getPost');
 
-const getTopics = (req, res) => getAllTopics(req, res, db);
-const newTopic = (req, res) => addTopic(req, res, db);
+const getPosts = (req, res) => getAllPosts(req, res, db);
+const newPost = (req, res) => addPost(req, res, db);
 
 module.exports = {
-    getTopics,
-    newTopic,
+    getPosts,
+    newPost,
 };

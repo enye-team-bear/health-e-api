@@ -9,6 +9,10 @@ const {
 
 const {
     newTopic, getTopics,
+} = require('../controllers/topic/index');
+
+const {
+    newPost, getPosts,
 } = require('../controllers/post/index');
 
 // user Routes
@@ -18,5 +22,7 @@ router.put('/user/image', authGuard, image);
 router.get('/users', getAll);
 router.post('/new_topic', newTopic);
 router.get('/get_topics', getTopics);
+router.post('/new_post', newPost);
+router.get('/get_posts', getPosts);
 
 module.exports = router;
