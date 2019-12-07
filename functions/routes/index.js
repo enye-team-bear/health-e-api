@@ -19,6 +19,10 @@ const {
     newComment, getComments,
 } = require('../controllers/comment/index');
 
+const {
+    likePost, unlikePost, postLikeStatus,
+} = require('../controllers/comment/index');
+
 // user Routes
 router.post('/signup', signUp);
 router.post('/login', login);
@@ -30,5 +34,8 @@ router.post('/new_post', newPost);
 router.get('/get_posts', getPosts);
 router.post('/new_comment', newComment);
 router.get('/get_comments/:postID', getComments);
+router.post('/like_post/:postID', likePost);
+router.post('/unlike_post/:postID', unlikePost);
+router.post('/post_like_status/:postID', postLikeStatus);
 
 module.exports = router;

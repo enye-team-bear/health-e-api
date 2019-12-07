@@ -13,14 +13,14 @@ const {
     CREATED,
 } = HttpStatus;
 
-const createComment = async (req, res, db) => {
+const createLike = async (req, res, db) => {
     const {
-        postID, thread, userID,
+        postID, userID,
     } = req.body;
-    await db.doc(`/comments/${postID}`).set({
+    await db.doc(`/like/${postID}`).set({
         createdAt: new Date().toISOString(),
         postID,
-        thread,
+        status: false,
         userID,
     });
     return res.status(CREATED).json({ data: req.body, status: success });
@@ -30,14 +30,14 @@ const errorsReturn = res => res
     .status(INTERNAL_SERVER_ERROR)
     .json({ message: somethingWentWrong, status: error });
 
-const addComment = async (req, res, db) => {
+const likePost = async (req, res, db) => {
     try {
-        return createComment(req, res, db);
+        return createLike(req, res, db);
     } catch (err) {
         return errorsReturn(res, err);
     }
 };
 
 module.exports = {
-    addComment,
+    likePost,
 };
