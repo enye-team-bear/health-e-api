@@ -11,7 +11,7 @@ const mapUsers = async (res, users) => {
 };
 
 const getUser = async (req, res, db) => {
-    const userName = req.params.userName.toLowerCase();
+    const userName = req.user.userName.toLowerCase();
     const users = await db
         .collection('users')
         .doc(userName)
@@ -24,16 +24,16 @@ const getUser = async (req, res, db) => {
     return mapUsers(res, users);
 };
 
-const getAUser = async (req, res, db) => {
+const getAuthUserCredentials = async (req, res, db) => {
     try {
         return getUser(req, res, db);
-    } catch (err) {
+    } catch (errors) {
         return res
             .status(INTERNAL_SERVER_ERROR)
-            .json({ message: somethingWentWrong, status: error });
+            .json({ message: somethingWentWrong, status: errors });
     }
 };
 
 module.exports = {
-    getAUser,
+    getAuthUserCredentials,
 };
