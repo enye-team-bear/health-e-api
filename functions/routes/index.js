@@ -15,6 +15,10 @@ const {
     newPost, getPosts,
 } = require('../controllers/post/index');
 
+const {
+    newComment, getComments,
+} = require('../controllers/comment/index');
+
 // user Routes
 router.post('/signup', signUp);
 router.post('/login', login);
@@ -24,5 +28,7 @@ router.post('/new_topic', newTopic);
 router.get('/get_topics', getTopics);
 router.post('/new_post', newPost);
 router.get('/get_posts', getPosts);
+router.post('/new_comment', newComment);
+router.get('/get_comments/:postID', getComments);
 
 module.exports = router;
