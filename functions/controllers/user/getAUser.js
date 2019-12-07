@@ -1,4 +1,3 @@
-const _ = require('lodash');
 const HttpStatus = require('http-status-codes');
 const { message, status } = require('../../util/constants');
 
