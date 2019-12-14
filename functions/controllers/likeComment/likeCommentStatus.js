@@ -13,7 +13,7 @@ const mapResult = async (res, likeStatus) => {
             _.pick(doc.data(), [
                 'createdAt',
                 'status',
-                'postID',
+                'CommentID',
                 'userID',
             ]),
         );
@@ -22,10 +22,10 @@ const mapResult = async (res, likeStatus) => {
 };
 
 const getStatus = async (req, res, db) => {
-    // Create a 'where' query against the collection to get like status of the speficified post.
+    // Create a 'where' query against the collection to get like status of the speficified Comment.
     const likeStatus = await db
-        .collection('like')
-        .where('postID', '==', `${req.params.postID}`)
+        .collection('like_comment')
+        .where('CommentID', '==', `${req.params.commentID}`)
         .where('userID', '==', `${req.params.userID}`).get();
 
     if (!likeStatus) {

@@ -1,14 +1,14 @@
 const { db } = require('../../util/admin');
-const { like } = require('./like');
-const { unlike } = require('./unlike');
-const { likeStatus } = require('./likeStatus');
+const { setLikePost } = require('./like');
+const { setUnLikePost } = require('./unlike');
+const { getLikeStatus } = require('./likeStatus');
 
-const likePost = (req, res) => like(req, res, db);
-const unlikePost = (req, res) => unlike(req, res, db);
-const postlikeStatus = (req, res) => likeStatus(req, res, db);
+const likePost = (req, res) => setLikePost(req, res, db);
+const unlikePost = (req, res) => setUnLikePost(req, res, db);
+const postLikeStatus = (req, res) => getLikeStatus(req, res, db);
 
 module.exports = {
     likePost,
-    postlikeStatus,
+    postLikeStatus,
     unlikePost,
 };

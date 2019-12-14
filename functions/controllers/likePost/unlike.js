@@ -13,9 +13,9 @@ const {
     CREATED,
 } = HttpStatus;
 
-const createLike = async (req, res, db) => {
+const unlike = async (req, res, db, postID) => {
     const {
-        postID, userID,
+        userID,
     } = req.body;
     await db.doc(`/like/${postID}`).set({
         createdAt: new Date().toISOString(),
@@ -30,14 +30,14 @@ const errorsReturn = res => res
     .status(INTERNAL_SERVER_ERROR)
     .json({ message: somethingWentWrong, status: error });
 
-const likePost = async (req, res, db) => {
+const setUnLikePost = async (req, res, db) => {
     try {
-        return createLike(req, res, db);
+        return unlike(req, res, db, req.params.postID);
     } catch (err) {
         return errorsReturn(res, err);
     }
 };
 
 module.exports = {
-    likePost,
+    setUnLikePost,
 };

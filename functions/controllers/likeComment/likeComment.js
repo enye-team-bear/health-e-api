@@ -13,13 +13,13 @@ const {
     CREATED,
 } = HttpStatus;
 
-const like = async (req, res, db, postID) => {
+const like = async (req, res, db, commentID) => {
     const {
         userID,
     } = req.body;
-    await db.doc(`/like/${postID}`).set({
+    await db.doc(`/like_comment/${commentID}`).set({
+        commentID,
         createdAt: new Date().toISOString(),
-        postID,
         status: true,
         userID,
     });
@@ -30,14 +30,14 @@ const errorsReturn = res => res
     .status(INTERNAL_SERVER_ERROR)
     .json({ message: somethingWentWrong, status: error });
 
-const setLikePost = async (req, res, db) => {
+const setLikeComment = async (req, res, db) => {
     try {
-        return like(req, res, db, req.params.postID);
+        return like(req, res, db, req.params.CommentID);
     } catch (err) {
         return errorsReturn(res, err);
     }
 };
 
 module.exports = {
-    setLikePost,
+    setLikeComment,
 };

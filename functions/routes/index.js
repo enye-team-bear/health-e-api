@@ -21,7 +21,11 @@ const {
 
 const {
     likePost, unlikePost, postLikeStatus,
-} = require('../controllers/comment/index');
+} = require('../controllers/likePost/index');
+
+const {
+    likeComment, unlikeComment, commentLikeStatus,
+} = require('../controllers/likePost/index');
 
 // user Routes
 router.post('/signup', signUp);
@@ -34,8 +38,13 @@ router.post('/new_post', newPost);
 router.get('/get_posts', getPosts);
 router.post('/new_comment', newComment);
 router.get('/get_comments/:postID', getComments);
+
 router.post('/like_post/:postID', likePost);
 router.post('/unlike_post/:postID', unlikePost);
 router.post('/post_like_status/:postID', postLikeStatus);
+
+router.post('/like_comment/:commentID', likeComment);
+router.post('/unlike_comment/:commentID', unlikeComment);
+router.post('/comment_like_status/:commentID', commentLikeStatus);
 
 module.exports = router;
