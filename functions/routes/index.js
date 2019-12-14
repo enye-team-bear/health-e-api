@@ -25,7 +25,7 @@ const {
 
 const {
     likeComment, unlikeComment, commentLikeStatus,
-} = require('../controllers/likePost/index');
+} = require('../controllers/likeComment/index');
 
 // user Routes
 router.post('/signup', signUp);
