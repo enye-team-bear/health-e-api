@@ -15,11 +15,12 @@ const {
 
 const unlike = async (req, res, db, commentID) => {
     const {
-        userID,
+        userID, postID,
     } = req.body;
     await db.doc(`/like_comment/${commentID}`).set({
         commentID,
         createdAt: new Date().toISOString(),
+        postID,
         status: false,
         userID,
     });

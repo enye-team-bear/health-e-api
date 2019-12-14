@@ -15,11 +15,12 @@ const {
 
 const like = async (req, res, db, commentID) => {
     const {
-        userID,
+        userID, postID,
     } = req.body;
     await db.doc(`/like_comment/${commentID}`).set({
         commentID,
         createdAt: new Date().toISOString(),
+        postID,
         status: true,
         userID,
     });
@@ -32,7 +33,7 @@ const errorsReturn = res => res
 
 const setLikeComment = async (req, res, db) => {
     try {
-        return like(req, res, db, req.params.CommentID);
+        return like(req, res, db, req.params.commentID);
     } catch (err) {
         return errorsReturn(res, err);
     }

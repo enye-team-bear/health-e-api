@@ -13,7 +13,8 @@ const mapResult = async (res, likeStatus) => {
             _.pick(doc.data(), [
                 'createdAt',
                 'status',
-                'CommentID',
+                'commentID',
+                'postID',
                 'userID',
             ]),
         );
