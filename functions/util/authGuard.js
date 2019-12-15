@@ -14,7 +14,7 @@ const checkAuth = async (req, idToken, next) => {
     req.user = decodedToken;
     const user = await db
         .collection(users)
-        .where(userId, '==', decodedToken.uid)
+        .where(userId, '==', decodedToken.user_id)
         .limit(1)
         .get();
     req.user.userName = user.docs[0].data().userName;
