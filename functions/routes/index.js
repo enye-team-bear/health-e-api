@@ -4,12 +4,12 @@ const router = express.Router();
 const authGuard = require('../util/authGuard');
 
 const {
-    login,
-    signUp,
-    image,
-    getAll,
-    getUserById,
-    AuthUserCredentials,
+	login,
+	signUp,
+	image,
+	getAll,
+	getUserById,
+	AuthUserCredentials,
 } = require('../controllers/user/index');
 
 // user Routes
