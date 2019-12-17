@@ -1,8 +1,7 @@
 const _ = require('lodash');
-const HttpStatus = require('http-status-codes');
 const { message, status } = require('../../util/constants');
 
-const { BAD_REQUEST, OK, INTERNAL_SERVER_ERROR } = HttpStatus;
+const { BAD_REQUEST, OK, INTERNAL_SERVER_ERROR } = require('http-status-codes');
 const { error, success } = status;
 const { somethingWentWrong } = message;
 
