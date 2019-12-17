@@ -39,7 +39,7 @@ const storeUser = async (req, res, db, userId, token) => {
 };
 
 const createUser = async (req, res, db) => {
-    const { email, password } = req.body;
+	const { email, password } = req.body;
 	const user = await firebase
 		.auth()
 		.createUserWithEmailAndPassword(email, password);
