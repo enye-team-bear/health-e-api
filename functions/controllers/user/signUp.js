@@ -1,12 +1,14 @@
 /* eslint-disable max-len */
 const firebase = require('firebase');
+const _ = require('lodash');
 const {
-    INTERNAL_SERVER_ERROR,
-    BAD_REQUEST,
-    CREATED,
-    CONFLICT,
+	PRECONDITION_FAILED,
+	INTERNAL_SERVER_ERROR,
+	BAD_REQUEST,
+	CREATED,
+	CONFLICT,
 } = require('http-status-codes');
-const { validateCode } = require('../../util/validator');
+const { validateSignUpData } = require('../../util/validator');
 const { configConstants, status, message } = require('../../util/constants');
 
 const { error, success } = status;
@@ -38,16 +40,12 @@ const storeUser = async (req, res, db, userId, token) => {
 
 const createUser = async (req, res, db) => {
     const { email, password } = req.body;
-    // try {
-    const user = await firebase
-        .auth()
-        .createUserWithEmailAndPassword(email, password);
-    const userId = await user.user.uid;
-    const token = await user.user.getIdToken();
-    storeUser(req, res, db, userId, token);
-    // } catch (e) {
-    //    console.log(e);
-    // }
+	const user = await firebase
+		.auth()
+		.createUserWithEmailAndPassword(email, password);
+	const userId = await user.user.uid;
+	const token = await user.user.getIdToken();
+	storeUser(req, res, db, userId, token);
 };
 
 const errorsReturn = (res, err) => {
@@ -60,6 +58,27 @@ const errorsReturn = (res, err) => {
         .status(INTERNAL_SERVER_ERROR)
         .json({ message: somethingWentWrong, status: error });
 };
+
+const validateCode = (req, res) => {
+	// validating input
+	const { valid, errors } = validateSignUpData(
+		_.pick(req.body, [
+			'fullName',
+			'userName',
+			'email',
+			'number',
+			'password',
+			'confirmPassword',
+			'userStatus',
+		]),
+	);
+	if (!valid) {
+		return res
+			.status(PRECONDITION_FAILED)
+			.json({ message: errors, status: error });
+	}
+};
+
 const signupUser = async (req, res, db) => {
     validateCode(req, res);
     // ensuring user does not exist in db.. using unique username
