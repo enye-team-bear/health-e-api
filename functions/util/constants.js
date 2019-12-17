@@ -25,6 +25,6 @@ exports.configConstants = {
     IMAGE_JPEG: 'image/jpeg',
     IMAGE_PNG: 'image/png',
     defaultImg: 'defaultImg.png',
-    user: 'user',
     userId: 'userId',
+    users: 'users',
 };

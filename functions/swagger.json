@@ -1,0 +1,23 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is the api for Healthe web application.  using Node Express Firebase functions for cloud functions and firebase firestore for database.",
+    "version": "1.0.0",
+    "title": "Health-e API",
+    "contact": {
+      "email": "oyinkuromosesvictor@gmail.com"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "us-central1-health-e-api.cloudfunctions.net",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "user",
+      "description": "Everything about users in the api"
+    }
+  ]
+}
