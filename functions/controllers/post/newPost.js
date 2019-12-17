@@ -1,17 +1,9 @@
 /* eslint-disable max-len */
-// const firebase = require('firebase');
-const HttpStatus = require('http-status-codes');
-// const { validateCode } = require('../../util/validator');
+const { INTERNAL_SERVER_ERROR, CREATED } = require('http-status-codes');
 const { status, message } = require('../../util/constants');
 
 const { error, success } = status;
-const {
-    somethingWentWrong,
-} = message;
-const {
-    INTERNAL_SERVER_ERROR,
-    CREATED,
-} = HttpStatus;
+const { somethingWentWrong } = message;
 
 const createPost = async (req, res, db) => {
     const {
