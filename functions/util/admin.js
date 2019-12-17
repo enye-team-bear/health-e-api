@@ -1,6 +1,6 @@
 const admin = require('firebase-admin');
 const firebase = require('firebase');
-const serviceAccount = require('../serviceAccount.json');
+// const serviceAccount = require('../serviceAccount.json');
 require('firebase/firestore');
 
 firebase.initializeApp({
@@ -13,10 +13,7 @@ firebase.initializeApp({
     storageBucket: process.env.STORAGE_BUCKET,
 });
 
-admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    databaseURL: process.env.DATABASE_URL,
-});
+admin.initializeApp();
 
 const db = firebase.firestore();
 
