@@ -76,6 +76,7 @@ const validateCode = (req, res) => {
 			.json({ message: errors, status: error });
 	}
 };
+
 const signupUser = async (req, res, db) => {
 	validateCode(req, res);
 	// ensuring user does not exist in db.. using unique username
