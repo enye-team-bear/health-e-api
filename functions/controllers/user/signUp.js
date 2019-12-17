@@ -1,6 +1,11 @@
 /* eslint-disable max-len */
 const firebase = require('firebase');
-const HttpStatus = require('http-status-codes');
+const {
+    INTERNAL_SERVER_ERROR,
+    BAD_REQUEST,
+    CREATED,
+    CONFLICT,
+} = require('http-status-codes');
 const { validateCode } = require('../../util/validator');
 const { configConstants, status, message } = require('../../util/constants');
 
@@ -12,12 +17,6 @@ const {
     userNameExists,
 } = message;
 const { defaultImg } = configConstants;
-const {
-    INTERNAL_SERVER_ERROR,
-    BAD_REQUEST,
-    CREATED,
-    CONFLICT,
-} = HttpStatus;
 const imageUrl = `https://firebasestorage.googleapis.com/v0/b/${process.env.STORAGE_BUCKET}/o/${defaultImg}?alt=media`;
 
 const storeUser = async (req, res, db, userId, token) => {
