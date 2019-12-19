@@ -1,6 +1,6 @@
+/* eslint-disable arrow-parens */
 /* eslint-disable indent */
 /* eslint-disable no-tabs */
-const _ = require('lodash');
 const { BAD_REQUEST, OK, INTERNAL_SERVER_ERROR } = require('http-status-codes');
 const { message, status } = require('../../util/constants');
 
