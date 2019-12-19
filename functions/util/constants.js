@@ -16,6 +16,7 @@ exports.message = {
 	mustBeValidEmail: 'Must be a valid email address',
 	mustNotBeEmpty: 'Must not be Empty',
 	passwordMustMatch: 'Passwords must Match',
+	postAlreadyLiked: 'Post Already Liked',
 	postNotFound: 'Post Not Found',
 	somethingWentWrong: 'Something went wrong please try again',
 	topicExists: 'Topic already exist',
