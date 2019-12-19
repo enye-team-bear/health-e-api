@@ -1,3 +1,6 @@
+/* eslint-disable linebreak-style */
+/* eslint-disable no-tabs */
+/* eslint-disable indent */
 /* eslint-disable max-len */
 const { INTERNAL_SERVER_ERROR, CREATED } = require('http-status-codes');
 const { status, message } = require('../../util/constants');
@@ -6,15 +9,14 @@ const { error, success } = status;
 const { somethingWentWrong } = message;
 
 const createPost = async (req, res, db) => {
-	const { topic, title, thread } = req.body;
-	const newPost = {
+	const { title, thread } = req.body;
+	await db.doc(`/posts/${title}`).set({
 		createdAt: new Date().toISOString(),
 		thread,
 		title,
-		topic,
-		userId: req.user.uid,
-	}
-	await db.collection('posts').add(newPost);
+		topicID: req.params.id,
+		userID: req.user.userName,
+	});
 	return res.status(CREATED).json({ data: req.body, status: success });
 };
 
