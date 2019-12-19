@@ -18,6 +18,7 @@ exports.message = {
 	passwordMustMatch: 'Passwords must Match',
 	postAlreadyLiked: 'Post Already Liked',
 	postNotFound: 'Post Not Found',
+	postNotLiked: 'Post Not Liked',
 	somethingWentWrong: 'Something went wrong please try again',
 	topicExists: 'Topic already exist',
 	unAuthorized: 'UnAuthorized',
