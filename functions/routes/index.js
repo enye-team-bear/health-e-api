@@ -16,7 +16,12 @@ const {
 
 const { newTopic, getTopics } = require('../controllers/topic/index');
 
-const { newPost, getPosts, comment } = require('../controllers/post/index');
+const {
+	newPost,
+	getPosts,
+	comment,
+	like,
+} = require('../controllers/post/index');
 
 // user Routes
 router.post('/signup', signUp);
@@ -28,6 +33,7 @@ router.get('/user/:userName', getUserById);
 router.post('/new_topic', authGuard, newTopic);
 router.get('/get_topics', getTopics);
 router.post('/post/:postId/comment', authGuard, comment);
+router.get('/post/:postId/like', authGuard, like);
 router.post('/new_post', authGuard, newPost);
 router.get('/get_posts', getPosts);
 
