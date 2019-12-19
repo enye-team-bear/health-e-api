@@ -1,3 +1,5 @@
+/* eslint-disable indent */
+/* eslint-disable no-tabs */
 const express = require('express');
 
 const router = express.Router();
@@ -14,7 +16,7 @@ const {
 
 const { newTopic, getTopics } = require('../controllers/topic/index');
 
-const { newPost, getPosts } = require('../controllers/post/index');
+const { newPost, getPosts, comment } = require('../controllers/post/index');
 
 // user Routes
 router.post('/signup', signUp);
@@ -25,7 +27,8 @@ router.get('/user', authGuard, AuthUserCredentials);
 router.get('/user/:userName', getUserById);
 router.post('/new_topic', authGuard, newTopic);
 router.get('/get_topics', getTopics);
+router.post('/post/:postId/comment', authGuard, comment);
 router.post('/new_post', authGuard, newPost);
-router.get('/get_posts',  getPosts);
+router.get('/get_posts', getPosts);
 
 module.exports = router;

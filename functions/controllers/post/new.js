@@ -20,8 +20,7 @@ const createPost = async (req, res, db) => {
 	return res.status(CREATED).json({ data: req.body, status: success });
 };
 
-const errorsReturn = (res) =>
-	res
+const errorsReturn = res => res
 		.status(INTERNAL_SERVER_ERROR)
 		.json({ message: somethingWentWrong, status: error });
 
