@@ -19,10 +19,12 @@ const createTopic = async (req, res, db) => {
     const {
         topic,
     } = req.body;
-    await db.doc(`/topics/${topic}`).set({
+    const newTopic = {
         createdAt: new Date().toISOString(),
         topic,
-    });
+        userId: req.user.uid
+    }
+    await db.collection('topics').add(newTopic);
     return res.status(CREATED).json({ data: topic, status: success });
 };
 
@@ -31,17 +33,22 @@ const errorsReturn = res => res
     .json({ message: somethingWentWrong, status: error });
 
 const addTopic = async (req, res, db) => {
+    const {topic} = req.body
     // ensure unique data
     try {
-        const docu = await db.doc(`/topics/${req.body.topic}`).get();
-        if (docu.exists) {
+        const docu = await db.collection('topics').where("topic", "==", topic).get();
+       if(docu.docs[0]){
+        const file = docu.docs[0].data().topic
+        if (file === topic) {
             return res.status(CONFLICT).json({
                 message: topicExists,
                 status: error,
             });
         }
+       }
         return createTopic(req, res, db);
     } catch (err) {
+        console.log(err)
         return errorsReturn(res, err);
     }
 };
