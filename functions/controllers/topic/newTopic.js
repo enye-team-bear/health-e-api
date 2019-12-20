@@ -14,15 +14,15 @@ const { INTERNAL_SERVER_ERROR, CREATED, CONFLICT } = HttpStatus;
 const createTopic = async (req, res, db) => {
 	const { topic, thread, title } = req.body;
 	const newTopic = {
-		createdAt: new Date().toISOString(),
 		commentCount: 0,
+		createdAt: new Date().toISOString(),
 		likeCount: 0,
 		thread,
 		title,
 		topic,
 		userId: req.user.uid,
 	};
-	const top = await db.collection('topics').add(newTopic);
+	await db.collection('topics').add(newTopic);
 	return res.status(CREATED).json({ data: newTopic, status: success });
 };
 

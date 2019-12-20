@@ -14,7 +14,13 @@ const {
 	AuthUserCredentials,
 } = require('../controllers/user/index');
 
-const { newTopic, getTopics, commentOnTopic, likeTop, unlikeTop } = require('../controllers/topic/index');
+const {
+	newTopic,
+	getTopics,
+	commentOnTopic,
+	likeTop,
+	unlikeTop,
+} = require('../controllers/topic/index');
 
 const {
 	newPost,
