@@ -12,14 +12,18 @@ const { somethingWentWrong, topicExists } = message;
 const { INTERNAL_SERVER_ERROR, CREATED, CONFLICT } = HttpStatus;
 
 const createTopic = async (req, res, db) => {
-	const { topic } = req.body;
+	const { topic, thread, title } = req.body;
 	const newTopic = {
 		createdAt: new Date().toISOString(),
+		commentCount: 0,
+		likeCount: 0,
+		thread,
+		title,
 		topic,
 		userId: req.user.uid,
 	};
-	await db.collection('topics').add(newTopic);
-	return res.status(CREATED).json({ data: topic, status: success });
+	const top = await db.collection('topics').add(newTopic);
+	return res.status(CREATED).json({ data: newTopic, status: success });
 };
 
 const errorsReturn = (res) => {

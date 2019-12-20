@@ -9,12 +9,10 @@ const { somethingWentWrong } = message;
 const mapTopics = async (res, topics) => {
     const topic = [];
     topics.forEach(doc => {
-        topic.push(
-            _.pick(doc.data(), [
-                'createdAt',
-                'topic',
-            ]),
-        );
+        topic.push({
+			id: doc.id,
+			...doc.data(),
+		});
     });
     return res.status(OK).json({ data: topic, status: success });
 };

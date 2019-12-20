@@ -14,7 +14,7 @@ const {
 	AuthUserCredentials,
 } = require('../controllers/user/index');
 
-const { newTopic, getTopics } = require('../controllers/topic/index');
+const { newTopic, getTopics, commentOnTopic, likeTop, unlikeTop } = require('../controllers/topic/index');
 
 const {
 	newPost,
@@ -36,6 +36,9 @@ router.get('/get_topics', getTopics);
 router.post('/post/:postId/comment', authGuard, comment);
 router.get('/post/:postId/like', authGuard, like);
 router.get('/post/:postId/unlike', authGuard, unlike);
+router.post('/post/:topicId/comment', authGuard, commentOnTopic);
+router.get('/post/:topicId/like', authGuard, likeTop);
+router.get('/post/:topicId/unlike', authGuard, unlikeTop);
 router.post('/new_post', authGuard, newPost);
 router.get('/get_posts', getPosts);
 

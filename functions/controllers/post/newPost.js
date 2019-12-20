@@ -9,18 +9,16 @@ const { error, success } = status;
 const { somethingWentWrong } = message;
 
 const createPost = async (req, res, db) => {
-	const { topic, title, thread } = req.body;
+	const { thread } = req.body;
 	const newPost = {
 		commentCount: 0,
 		createdAt: new Date().toISOString(),
 		likeCount: 0,
 		thread,
-		title,
-		topic,
 		userId: req.user.uid,
 	};
 	await db.collection('posts').add(newPost);
-	return res.status(CREATED).json({ data: req.body, status: success });
+	return res.status(CREATED).json({ data: newPost, status: success });
 };
 
 const errorsReturn = (res) => {
