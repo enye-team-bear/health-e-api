@@ -64,8 +64,6 @@ exports.createNotificationOnLikePost = functions.firestore
         db.doc(`/posts/${snapshot.data().postId}`)
             .get()
             .then(doc => {
-                console.log('487', snapshot.data().userName);
-                console.log('67', doc.data().userName);
                 if (
                     doc.exists &&
                     doc.data().userName !== snapshot.data().userName
@@ -77,7 +75,52 @@ exports.createNotificationOnLikePost = functions.firestore
 
 exports.deleteNotificationOnUnlike = functions.firestore
     .document('likes/{id}')
-    .onDelete(snapshot => db
-        .doc(`/notifications/${snapshot.id}`)
-        .delete()
-        .catch(err => console.error(err)),);
+    .onDelete(snapshot => {
+        db.doc(`/notifications/${snapshot.id}`)
+            .delete()
+            .catch(err => console.error(err));
+    });
+
+exports.createNotificationOnCommentPost = functions.firestore
+    .document('comments/{id}')
+    .onCreate(snapshot => {
+        db.doc(`/posts/${snapshot.data().postId}`)
+            .get()
+            .then(doc => {
+                if (
+                    doc.exists &&
+                    doc.data().userName !== snapshot.data().userName
+                ) {
+                    return db.doc(`notifications/${snapshot.id}`).set({
+                        createdAt: new Date().toISOString(),
+                        postId: doc.id,
+                        read: false,
+                        recipient: doc.data().userName,
+                        sender: snapshot.data().userName,
+                        type: 'comment',
+                    });
+                }
+            });
+    });
+
+exports.createNotificationOnCommentTopic = functions.firestore
+    .document('comments/{id}')
+    .onCreate(snapshot => {
+        db.doc(`/topics/${snapshot.data().topicId}`)
+            .get()
+            .then(doc => {
+                if (
+                    doc.exists &&
+                    doc.data().userName !== snapshot.data().userName
+                ) {
+                    return db.doc(`notifications/${snapshot.id}`).set({
+                        createdAt: new Date().toISOString(),
+                        read: false,
+                        recipient: doc.data().userName,
+                        sender: snapshot.data().userName,
+                        topicId: doc.id,
+                        type: 'comment',
+                    });
+                }
+            });
+    });
