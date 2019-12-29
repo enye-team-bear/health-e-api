@@ -1,20 +1,16 @@
-const _ = require('lodash');
-const HttpStatus = require('http-status-codes');
+const { BAD_REQUEST, OK, INTERNAL_SERVER_ERROR } = require('http-status-codes');
 const { message, status } = require('../../util/constants');
 
-const { BAD_REQUEST, OK, INTERNAL_SERVER_ERROR } = HttpStatus;
 const { error, success } = status;
 const { somethingWentWrong } = message;
 
 const mapTopics = async (res, topics) => {
     const topic = [];
     topics.forEach(doc => {
-        topic.push(
-            _.pick(doc.data(), [
-                'createdAt',
-                'topic',
-            ]),
-        );
+        topic.push({
+            id: doc.id,
+            ...doc.data(),
+        });
     });
     return res.status(OK).json({ data: topic, status: success });
 };
