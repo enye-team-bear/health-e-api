@@ -22,7 +22,7 @@ exports.message = {
 	somethingWentWrong: 'Something went wrong please try again',
 	topicExists: 'Topic already exist',
 	unAuthorized: 'UnAuthorized',
-	userNameExists: 'username already exists pick another',
+	userNameExists: 'userName already exists pick another',
 	wrongCredentials: 'Wrong credentials Try Again',
 	wrongFileSubmitted: 'Wrong file type submitted',
 };

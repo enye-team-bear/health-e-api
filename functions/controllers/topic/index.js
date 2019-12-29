@@ -1,5 +1,3 @@
-/* eslint-disable indent */
-/* eslint-disable no-tabs */
 const { db } = require('../../util/admin');
 const { addTopic } = require('./newTopic');
 const { getAllTopics } = require('./getTopic');
@@ -14,9 +12,9 @@ const likeTop = (req, res) => likeTopic(req, res, db);
 const unlikeTop = (req, res) => unlikeTopic(req, res, db);
 
 module.exports = {
-	commentOnTopic,
-	getTopics,
-	likeTop,
-	newTopic,
-	unlikeTop,
+    commentOnTopic,
+    getTopics,
+    likeTop,
+    newTopic,
+    unlikeTop,
 };
