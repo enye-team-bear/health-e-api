@@ -10,10 +10,11 @@ const mapUsers = async (res, users) => {
 };
 
 const getUser = async (req, res, db) => {
-    const userName = req.user.userName.toLowerCase();
+    const { userName } = req.user;
+    const usersName = userName;
     const users = await db
         .collection('users')
-        .doc(userName)
+        .doc(usersName)
         .get();
     if (!users) {
         return res

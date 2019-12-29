@@ -8,6 +8,7 @@ let postData;
 
 const likePosts = async (req, res, db, likeDoc, postDoc) => {
     await db.collection('likes').add({
+        createdAt: new Date().toISOString(),
         topicId: req.params.topicId,
         userName: req.user.userName,
     });

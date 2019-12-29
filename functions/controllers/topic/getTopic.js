@@ -16,7 +16,10 @@ const mapTopics = async (res, topics) => {
 };
 
 const getTopic = async (res, db) => {
-    const topics = await db.collection('topics').get();
+    const topics = await db
+        .collection('topics')
+        .orderBy('createdAt', 'desc')
+        .get();
     if (!topics) {
         return res
             .status(BAD_REQUEST)

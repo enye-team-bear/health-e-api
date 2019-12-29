@@ -2,7 +2,7 @@ const { BAD_REQUEST, OK, INTERNAL_SERVER_ERROR } = require('http-status-codes');
 const { message, status } = require('../../util/constants');
 
 const { error, success } = status;
-const { somethingWentWrong } = message;
+const { somethingWentWrong, userNotFound } = message;
 
 const mapUsers = async (res, users) => {
     const user = users.data();
@@ -10,15 +10,16 @@ const mapUsers = async (res, users) => {
 };
 
 const getUser = async (req, res, db) => {
-    const userName = req.params.userName.toLowerCase();
+    const { userName } = req.params;
+    const usersName = userName;
     const users = await db
         .collection('users')
-        .doc(userName)
+        .doc(usersName)
         .get();
-    if (!users) {
+    if (!users || users.data() === undefined) {
         return res
             .status(BAD_REQUEST)
-            .json({ message: somethingWentWrong, status: error });
+            .json({ message: userNotFound, status: error });
     }
     return mapUsers(res, users);
 };
