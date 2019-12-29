@@ -12,6 +12,8 @@ const createPost = async (req, res, db) => {
         likeCount: 0,
         thread,
         userId: req.user.uid,
+        userImage: req.user.imageUrl,
+        userName: req.user.userName,
     };
     await db.collection('posts').add(newPost);
     return res.status(CREATED).json({ data: newPost, status: success });
