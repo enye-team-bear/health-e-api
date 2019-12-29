@@ -18,6 +18,7 @@ const {
     commentOnTopic,
     likeTop,
     unlikeTop,
+    getTopic,
 } = require('../controllers/topic/index');
 
 const {
@@ -38,6 +39,7 @@ router.get('/user', authGuard, AuthUserCredentials);
 router.get('/user/:userName', getUserById);
 router.post('/new_topic', authGuard, newTopic);
 router.get('/topics', getTopics);
+router.get('/topic/:topicId', getTopic);
 router.post('/topic/:topicId/comment', authGuard, commentOnTopic);
 router.get('/topic/:topicId/like', authGuard, likeTop);
 router.get('/topic/:topicId/unlike', authGuard, unlikeTop);
