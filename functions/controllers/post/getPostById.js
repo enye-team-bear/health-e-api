@@ -9,7 +9,6 @@ const postMessage = async (req, res, Post) => {
     res.status(OK).json({ data: Post, status: success });
 };
 
-// eslint-disable-next-line max-lines-per-function
 const getCommentAndLikes = async (req, res, db, doc) => {
     const Post = doc.data();
     Post.postId = doc.id;
@@ -20,16 +19,12 @@ const getCommentAndLikes = async (req, res, db, doc) => {
         .orderBy('createdAt', 'desc')
         .where('postId', '==', req.params.postId)
         .get();
-    comments.forEach(comment => {
-        Post.comments.push(comment.data());
-    });
+    comments.forEach(comment => Post.comments.push(comment.data()));
     const likes = await db
         .collection('likes')
         .where('postId', '==', req.params.postId)
         .get();
-    likes.forEach(like => {
-        Post.likes.push(like.data());
-    });
+    likes.forEach(like => Post.likes.push(like.data()));
     return postMessage(req, res, Post);
 };
 

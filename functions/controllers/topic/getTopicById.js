@@ -20,16 +20,12 @@ const getCommentAndLikes = async (req, res, db, doc) => {
         .orderBy('createdAt', 'desc')
         .where('topicId', '==', req.params.topicId)
         .get();
-    comments.forEach(comment => {
-        Topic.comments.push(comment.data());
-    });
+    comments.forEach(comment => Topic.comments.push(comment.data()));
     const likes = await db
         .collection('likes')
         .where('topicId', '==', req.params.topicId)
         .get();
-    likes.forEach(like => {
-        Topic.likes.push(like.data());
-    });
+    likes.forEach(like => Topic.likes.push(like.data()));
     return topicMessage(req, res, Topic);
 };
 
