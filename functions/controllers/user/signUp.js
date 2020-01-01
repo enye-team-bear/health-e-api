@@ -1,5 +1,4 @@
 /* eslint-disable object-curly-newline */
-const dotenv = require('dotenv');
 const firebase = require('firebase');
 const _ = require('lodash');
 const {
@@ -11,8 +10,6 @@ const {
 } = require('http-status-codes');
 const { validateSignUpData } = require('../../util/validator');
 const { configConstants, status, message } = require('../../util/constants');
-
-dotenv.config();
 
 const { error, success } = status;
 const {
