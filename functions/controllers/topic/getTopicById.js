@@ -9,7 +9,6 @@ const topicMessage = async (req, res, Topic) => {
     res.status(OK).json({ data: Topic, status: success });
 };
 
-// eslint-disable-next-line max-lines-per-function
 const getCommentAndLikes = async (req, res, db, doc) => {
     const Topic = doc.data();
     Topic.topicId = doc.id;
