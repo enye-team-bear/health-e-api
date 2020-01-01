@@ -74,3 +74,10 @@ exports.createNotificationOnLikePost = functions.firestore
                 }
             });
     });
+
+exports.deleteNotificationOnUnlike = functions.firestore
+    .document('likes/{id}')
+    .onDelete(snapshot => db
+        .doc(`/notifications/${snapshot.id}`)
+        .delete()
+        .catch(err => console.error(err)),);
