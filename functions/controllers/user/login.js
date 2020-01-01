@@ -25,6 +25,7 @@ const login = async (req, res) => {
         const Token = await userData.user.getIdToken();
         return res.status(OK).json({ data: Token, status: success });
     } catch (err) {
+        console.log(err);
         return res.status(INTERNAL_SERVER_ERROR).json({
             message: somethingWentWrong,
             status: error,

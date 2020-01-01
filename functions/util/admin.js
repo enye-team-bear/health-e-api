@@ -1,7 +1,9 @@
 const admin = require('firebase-admin');
 const firebase = require('firebase');
-// const serviceAccount = require('../serviceAccount.json');
+const dotenv = require('dotenv');
 require('firebase/firestore');
+
+dotenv.config();
 
 firebase.initializeApp({
     apiKey: process.env.API_KEY,

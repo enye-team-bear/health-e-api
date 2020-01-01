@@ -1,3 +1,4 @@
+/* eslint-disable object-curly-newline */
 const firebase = require('firebase');
 const _ = require('lodash');
 const {
@@ -22,9 +23,7 @@ const { defaultImg } = configConstants;
 const imageUrl = `https://firebasestorage.googleapis.com/v0/b/${process.env.STORAGE_BUCKET}/o/${defaultImg}?alt=media`;
 
 const storeUser = async (req, res, db, userId, token) => {
-    const {
-        email, number, userStatus, userName, fullName,
-    } = req.body;
+    const { email, number, userStatus, userName, fullName } = req.body;
     await db.doc(`/users/${userName}`).set({
         createdAt: new Date().toISOString(),
         email,
