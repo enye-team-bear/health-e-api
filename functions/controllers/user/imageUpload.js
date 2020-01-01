@@ -5,12 +5,15 @@ const path = require('path');
 const os = require('os');
 const fs = require('fs');
 const { BAD_REQUEST, OK, INTERNAL_SERVER_ERROR } = require('http-status-codes');
+const dotenv = require('dotenv');
 const { admin } = require('../../util/admin');
 const { configConstants, status, message } = require('../../util/constants');
 
 const { error, success } = status;
 const { wrongFileSubmitted, somethingWentWrong, imageUpdateSucces } = message;
 const { IMAGE_JPEG, IMAGE_PNG } = configConstants;
+
+dotenv.config();
 
 const imageUpload = async (req, res, db) => {
     const busboy = new Busboy({ headers: req.headers });

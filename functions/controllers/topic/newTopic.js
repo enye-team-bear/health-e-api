@@ -16,6 +16,8 @@ const createTopic = async (req, res, db) => {
         title,
         topic,
         userId: req.user.uid,
+        userImage: req.user.imageUrl,
+        userName: req.user.userName,
     };
     await db.collection('topics').add(newTopic);
     return res.status(CREATED).json({ data: newTopic, status: success });

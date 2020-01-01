@@ -1,3 +1,5 @@
+/* eslint-disable object-curly-newline */
+const dotenv = require('dotenv');
 const firebase = require('firebase');
 const _ = require('lodash');
 const {
@@ -9,6 +11,8 @@ const {
 } = require('http-status-codes');
 const { validateSignUpData } = require('../../util/validator');
 const { configConstants, status, message } = require('../../util/constants');
+
+dotenv.config();
 
 const { error, success } = status;
 const {
@@ -22,9 +26,7 @@ const { defaultImg } = configConstants;
 const imageUrl = `https://firebasestorage.googleapis.com/v0/b/${process.env.STORAGE_BUCKET}/o/${defaultImg}?alt=media`;
 
 const storeUser = async (req, res, db, userId, token) => {
-    const {
-        email, number, userStatus, userName, fullName,
-    } = req.body;
+    const { email, number, userStatus, userName, fullName } = req.body;
     await db.doc(`/users/${userName}`).set({
         createdAt: new Date().toISOString(),
         email,

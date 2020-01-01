@@ -1,33 +1,31 @@
-/* eslint-disable indent */
-/* eslint-disable no-tabs */
 const express = require('express');
 
 const router = express.Router();
 const authGuard = require('../util/authGuard');
 
 const {
-	login,
-	signUp,
-	image,
-	getAll,
-	getUserById,
-	AuthUserCredentials,
+    login,
+    signUp,
+    image,
+    getAll,
+    getUserById,
+    AuthUserCredentials,
 } = require('../controllers/user/index');
 
 const {
-	newTopic,
-	getTopics,
-	commentOnTopic,
-	likeTop,
-	unlikeTop,
+    newTopic,
+    getTopics,
+    commentOnTopic,
+    likeTop,
+    unlikeTop,
 } = require('../controllers/topic/index');
 
 const {
-	newPost,
-	getPosts,
-	comment,
-	like,
-	unlike,
+    newPost,
+    getPosts,
+    comment,
+    like,
+    unlike,
 } = require('../controllers/post/index');
 
 // user Routes
