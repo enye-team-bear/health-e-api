@@ -22,6 +22,7 @@ const {
 
 const {
     newPost,
+    getPostId,
     getPosts,
     comment,
     like,
@@ -41,6 +42,7 @@ router.post('/topic/:topicId/comment', authGuard, commentOnTopic);
 router.get('/topic/:topicId/like', authGuard, likeTop);
 router.get('/topic/:topicId/unlike', authGuard, unlikeTop);
 router.post('/post/:postId/comment', authGuard, comment);
+router.get('/post/:postId', getPostId);
 router.get('/post/:postId/like', authGuard, like);
 router.get('/post/:postId/unlike', authGuard, unlike);
 router.post('/new_post', authGuard, newPost);
