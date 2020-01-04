@@ -6,13 +6,14 @@ require('firebase/firestore');
 dotenv.config();
 
 firebase.initializeApp({
-    apiKey: process.env.API_KEY,
-    appId: process.env.APP_ID,
-    authDomain: process.env.AUTH_DOMAIN,
-    databaseURL: process.env.DATABASE_URL,
-    messagingSenderId: process.env.MESSAGING_SENDER_ID,
-    projectId: process.env.PROJECT_ID,
-    storageBucket: process.env.STORAGE_BUCKET,
+    apiKey: 'AIzaSyBkmmr4aw78eOx7c57KHSMF43Z0RmImYck',
+    appId: '1:386461795826:web:11748057ba53fb43c5d76b',
+    authDomain: 'health-e-1015d.firebaseapp.com',
+    databaseURL: 'https://health-e-1015d.firebaseio.com',
+    measurementId: 'G-CC55C7P30L',
+    messagingSenderId: '386461795826',
+    projectId: 'health-e-1015d',
+    storageBucket: 'health-e-1015d.appspot.com',
 });
 
 admin.initializeApp();
