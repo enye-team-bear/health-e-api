@@ -21,6 +21,7 @@ app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.use('/', userRoute);
 
 exports.api = functions.https.onRequest(app);
+module.exports = functions.https.onRequest(app);
 
 const createLikeTopicNotification = async (snapshot, doc) => {
     await db.doc(`/notifications/${snapshot.id}`).set({

@@ -30,11 +30,12 @@ const {
     unlike,
 } = require('../controllers/post/index');
 
-const {
-    likeComment, unlikeComment,
-} = require('../controllers/comment/index');
+const { likeComment, unlikeComment } = require('../controllers/comment/index');
 
 // user Routes
+router.get('/', (req, res) => {
+    res.status(404).send('moses');
+});
 router.post('/signup', signUp);
 router.post('/login', login);
 router.put('/user/image', authGuard, image);
