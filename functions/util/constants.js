@@ -25,6 +25,7 @@ exports.message = {
     somethingWentWrong: 'Something went wrong please try again',
     topicExists: 'Topic already exist',
     unAuthorized: 'UnAuthorized',
+    updateSuccessful: 'User Updated successfully',
     userNameExists: 'userName already exists pick another',
     userNotFound: 'user Not Found',
     wrongCredentials: 'Wrong credentials Try Again',

@@ -10,6 +10,7 @@ const {
     getAll,
     getUserById,
     AuthUserCredentials,
+    updateUser,
 } = require('../controllers/user/index');
 
 const {
@@ -41,6 +42,7 @@ router.post('/login', login);
 router.put('/user/image', authGuard, image);
 router.get('/users', getAll);
 router.get('/user', authGuard, AuthUserCredentials);
+router.put('/user', authGuard, updateUser);
 router.get('/user/:userName', getUserById);
 router.post('/new_topic', authGuard, newTopic);
 router.get('/topics', getTopics);

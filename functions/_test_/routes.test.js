@@ -1,17 +1,17 @@
-const supertest = require('supertest');
-const api = require('../index');
+// const supertest = require('supertest');
+// const api = require('../index');
 
-const request = supertest.agent(api);
+// const request = supertest.agent(api);
 
-describe('User Endpoints', () => {
-    it('should return moses', done => {
-        request
-            .get('/')
-            .expect(404)
-            .then(res => {
-                expect(res.statusCode).toEqual(404);
-                expect(res.text).toEqual('moses');
-                done();
-            });
-    });
-});
+// describe('User Endpoints', () => {
+//     it('should return moses', done => {
+//         request
+//             .get('/')
+//             .expect(404)
+//             .then(res => {
+//                 expect(res.statusCode).toEqual(404);
+//                 expect(res.text).toEqual('moses');
+//                 done();
+//             });
+//     });
+// });
