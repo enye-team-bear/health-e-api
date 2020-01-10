@@ -9,6 +9,7 @@ const {
     image,
     getAll,
     getUserById,
+    coverPhoto,
     AuthUserCredentials,
     updateUser,
 } = require('../controllers/user/index');
@@ -40,6 +41,7 @@ router.get('/', (req, res) => {
 router.post('/signup', signUp);
 router.post('/login', login);
 router.put('/user/image', authGuard, image);
+router.put('/user/coverimage', authGuard, coverPhoto);
 router.get('/users', getAll);
 router.get('/user', authGuard, AuthUserCredentials);
 router.put('/user', authGuard, updateUser);
