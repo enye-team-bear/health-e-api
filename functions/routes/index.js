@@ -31,7 +31,10 @@ const {
     unlike,
 } = require('../controllers/post/index');
 
-const { likeComment, unlikeComment } = require('../controllers/comment/index');
+const {
+    likeComments,
+    unlikeComments,
+} = require('../controllers/comment/index');
 
 // user Routes
 router.get('/', (req, res) => {
@@ -56,7 +59,7 @@ router.get('/post/:postId/like', authGuard, like);
 router.get('/post/:postId/unlike', authGuard, unlike);
 router.post('/new_post', authGuard, newPost);
 router.get('/posts', getPosts);
-router.post('/comment/:commentId/like', authGuard, likeComment);
-router.post('/comment/:commentId/unlike', authGuard, unlikeComment);
+router.get('/comment/:commentId/like', authGuard, likeComments);
+router.get('/comment/:commentId/unlike', authGuard, unlikeComments);
 
 module.exports = router;

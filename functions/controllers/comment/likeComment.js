@@ -12,6 +12,7 @@ const likeComments = async (req, res, db, likeDoc, commentDoc) => {
         createdAt: new Date().toISOString(),
         userName: req.user.userName,
     });
+    commentData.likeCount = 0;
     commentData.likeCount += 1;
     await commentDoc.set({ likeCount: commentData.likeCount }, { merge: true });
     return res.status(OK).json({ data: commentData, status: SUCCESS });
