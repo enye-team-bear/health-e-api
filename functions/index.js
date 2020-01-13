@@ -124,3 +124,28 @@ exports.createNotificationOnCommentTopic = functions.firestore
                 }
             });
     });
+
+const createLikeCommentNotification = async (snapshot, doc) => {
+    await db.doc(`/notifications/${snapshot.id}`).set({
+        commentId: doc.id,
+        createdAt: new Date().toISOString(),
+        read: false,
+        recipient: doc.data().userName,
+        sender: snapshot.data().userName,
+        type: 'like',
+    });
+};
+exports.createNotificationOnCommentLike = functions.firestore
+    .document('likes/{id}')
+    .onCreate(snapshot => {
+        db.doc(`/comments/${snapshot.data().commentId}`)
+            .get()
+            .then(doc => {
+                if (
+                    doc.exists &&
+                    doc.data().userName !== snapshot.data().userName
+                ) {
+                    return createLikeCommentNotification(snapshot, doc);
+                }
+            });
+    });
