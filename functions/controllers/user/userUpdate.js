@@ -21,7 +21,7 @@ const setData = async (req, res, db) => {
             { merge: true },
         );
     res.status(OK).json({
-        data: updateSuccessful,
+        message: updateSuccessful,
         status: success,
     });
 };
