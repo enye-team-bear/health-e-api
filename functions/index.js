@@ -64,6 +64,25 @@ exports.addUserToAlgolia = functions.https.onRequest(async (req, res) => {
     });
 });
 
+exports.addPostsoAlgolia = functions.https.onRequest(async (req, res) => {
+    const arr = [];
+    const docs = await admin
+        .firestore()
+        .collection('posts')
+        .get();
+    docs.forEach(doc => {
+        const post = doc.data();
+        post.objectID = doc.id;
+        arr.push(post);
+    });
+    const client = algoliasearch(ALGOLIA_ID, ALGOLIA_ADMIN_KEY);
+    const index = client.initIndex('post');
+
+    index.saveObjects(arr, (err, content) => {
+        res.status(OK).json(content);
+    });
+});
+
 exports.onTopicCreated = functions.firestore
     .document('topics/{topicId}')
     .onCreate((snap, context) => {
@@ -82,6 +101,16 @@ exports.onUserCreated = functions.firestore
         const client = algoliasearch(ALGOLIA_ID, ALGOLIA_ADMIN_KEY);
         const index = client.initIndex(ALGOLIA_INDEX_NAME);
         return index.saveObject(user);
+    });
+
+exports.onUserCreated = functions.firestore
+    .document('posts/{postId}')
+    .onCreate((snap, context) => {
+        const post = snap.data();
+        post.objectID = context.params.topicId;
+        const client = algoliasearch(ALGOLIA_ID, ALGOLIA_ADMIN_KEY);
+        const index = client.initIndex(ALGOLIA_INDEX_NAME);
+        return index.saveObject(post);
     });
 
 const createLikeTopicNotification = async (snapshot, doc) => {
