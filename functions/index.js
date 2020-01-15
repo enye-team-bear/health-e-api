@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /* eslint-disable consistent-return */
 /* eslint-disable operator-linebreak */
 const cors = require('cors');
@@ -6,8 +5,10 @@ const dotenv = require('dotenv');
 const express = require('express');
 const functions = require('firebase-functions');
 const swaggerUi = require('swagger-ui-express');
+const { OK } = require('http-status-codes');
+const algoliasearch = require('algoliasearch');
 const swaggerDocs = require('./swagger.json');
-const { db } = require('./util/admin');
+const { admin, db } = require('./util/admin');
 
 const app = express();
 
@@ -21,6 +22,38 @@ app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.use('/', userRoute);
 
 exports.api = functions.https.onRequest(app);
+
+const { ALGOLIA_ID, ALGOLIA_ADMIN_KEY } = process.env;
+const ALGOLIA_INDEX_NAME = 'topics';
+
+exports.addTopicsToAlgolia = functions.https.onRequest(async (req, res) => {
+    const arr = [];
+    const docs = await admin
+        .firestore()
+        .collection('topics')
+        .get();
+    docs.forEach(doc => {
+        const user = doc.data();
+        user.objectID = doc.id;
+        arr.push(user);
+    });
+    const client = algoliasearch(ALGOLIA_ID, ALGOLIA_ADMIN_KEY);
+    const index = client.initIndex(ALGOLIA_INDEX_NAME);
+
+    index.saveObjects(arr, (err, content) => {
+        res.status(OK).json(content);
+    });
+});
+
+exports.onTopicCreated = functions.firestore
+    .document('topics/{topicId}')
+    .onCreate((snap, context) => {
+        const topic = snap.data();
+        topic.objectID = context.params.topicId;
+        const client = algoliasearch(ALGOLIA_ID, ALGOLIA_ADMIN_KEY);
+        const index = client.initIndex(ALGOLIA_INDEX_NAME);
+        return index.saveObject(topic);
+    });
 
 const createLikeTopicNotification = async (snapshot, doc) => {
     await db.doc(`/notifications/${snapshot.id}`).set({
@@ -76,9 +109,7 @@ exports.createNotificationOnLikePost = functions.firestore
 exports.deleteNotificationOnUnlike = functions.firestore
     .document('likes/{id}')
     .onDelete(snapshot => {
-        db.doc(`/notifications/${snapshot.id}`)
-            .delete()
-            .catch(err => console.error(err));
+        db.doc(`/notifications/${snapshot.id}`).delete();
     });
 
 exports.createNotificationOnCommentPost = functions.firestore
