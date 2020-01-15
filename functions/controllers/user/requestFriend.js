@@ -2,11 +2,20 @@ const { BAD_REQUEST, OK, INTERNAL_SERVER_ERROR } = require('http-status-codes');
 const { message, status } = require('../../util/constants');
 
 const { error, success } = status;
-const { somethingWentWrong, userNotFound } = message;
+const {
+    somethingWentWrong,
+    userNotFound,
+    requestAlreadySent,
+    cannotFollowSelf,
+    requestSent,
+} = message;
 
 const errors = {
     error1: res => {
-        res.status(BAD_REQUEST).json({ message: 'cannot follow yourself' });
+        res.status(BAD_REQUEST).json({
+            message: cannotFollowSelf,
+            status: error,
+        });
     },
     error2: res => {
         res.status(INTERNAL_SERVER_ERROR).json({
@@ -22,26 +31,27 @@ const errors = {
     },
     error4: res => {
         res.status(BAD_REQUEST).json({
-            message: 'Request Already sent Awaitting Acceptance',
+            message: requestAlreadySent,
             status: error,
         });
     },
 };
 
 const storeRequests = async (req, res, db, user) => {
+    const { uid, imageUrl, userName } = req.user;
     await db.collection('requests').add({
         accepted: false,
         createdAt: new Date().toISOString(),
         from: {
-            id: req.user.uid,
-            image: req.user.imageUrl,
-            userName: req.user.userName,
+            id: uid,
+            image: imageUrl,
+            userName,
         },
         rejected: false,
         to: user.data().userName,
     });
     return res.status(OK).json({
-        message: 'Request sent successfully',
+        message: requestSent,
         status: success,
     });
 };
