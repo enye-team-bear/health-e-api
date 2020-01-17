@@ -11,6 +11,7 @@ const {
     getUserById,
     coverPhoto,
     AuthUserCredentials,
+    sendFriendRequest,
     updateUser,
 } = require('../controllers/user/index');
 
@@ -45,6 +46,7 @@ router.post('/signup', signUp);
 router.post('/login', login);
 router.put('/user/image', authGuard, image);
 router.put('/user/coverimage', authGuard, coverPhoto);
+router.post('/user/:userName/requestFriend', authGuard, sendFriendRequest);
 router.get('/users', getAll);
 router.get('/user', authGuard, AuthUserCredentials);
 router.put('/user', authGuard, updateUser);
