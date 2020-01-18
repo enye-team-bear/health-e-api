@@ -7,7 +7,7 @@ const { commentAlreadyLiked, somethingWentWrong, commentNotFound } = message;
 let commentData;
 
 const likeComments = async (req, res, db, likeDoc, commentDoc) => {
-    await db.collection('likes').add({
+    await db.collection('likeComment').add({
         commentId: req.params.commentId,
         createdAt: new Date().toISOString(),
         userName: req.user.userName,
