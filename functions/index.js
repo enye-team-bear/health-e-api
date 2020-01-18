@@ -4,11 +4,12 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const express = require('express');
 const functions = require('firebase-functions');
+const axios = require('axios');
 const swaggerUi = require('swagger-ui-express');
 const { OK } = require('http-status-codes');
 const algoliasearch = require('algoliasearch');
 const swaggerDocs = require('./swagger.json');
-const { admin, db } = require('./util/admin');
+const { db } = require('./util/admin');
 
 const app = express();
 
@@ -28,10 +29,7 @@ const ALGOLIA_INDEX_NAME = 'topics';
 
 exports.addTopicsToAlgolia = functions.https.onRequest(async (req, res) => {
     const arr = [];
-    const docs = await admin
-        .firestore()
-        .collection('topics')
-        .get();
+    const docs = await db.collection('topics').get();
     docs.forEach(doc => {
         const user = doc.data();
         user.objectID = doc.id;
@@ -47,10 +45,7 @@ exports.addTopicsToAlgolia = functions.https.onRequest(async (req, res) => {
 
 exports.addUserToAlgolia = functions.https.onRequest(async (req, res) => {
     const arr = [];
-    const docs = await admin
-        .firestore()
-        .collection('users')
-        .get();
+    const docs = await db.collection('users').get();
     docs.forEach(doc => {
         const user = doc.data();
         user.objectID = doc.id;
@@ -66,10 +61,7 @@ exports.addUserToAlgolia = functions.https.onRequest(async (req, res) => {
 
 exports.addPostsoAlgolia = functions.https.onRequest(async (req, res) => {
     const arr = [];
-    const docs = await admin
-        .firestore()
-        .collection('posts')
-        .get();
+    const docs = await db.collection('posts').get();
     docs.forEach(doc => {
         const post = doc.data();
         post.objectID = doc.id;
@@ -83,34 +75,43 @@ exports.addPostsoAlgolia = functions.https.onRequest(async (req, res) => {
     });
 });
 
-exports.onTopicCreated = functions.firestore
-    .document('topics/{topicId}')
-    .onCreate((snap, context) => {
-        const topic = snap.data();
-        topic.objectID = context.params.topicId;
+exports.onPostCreated = functions.firestore
+    .document('posts/{id}')
+    .onCreate(async (snapshot, context) => {
+        const post = snapshot.data();
+        post.objectID = context.params.id;
         const client = algoliasearch(ALGOLIA_ID, ALGOLIA_ADMIN_KEY);
-        const index = client.initIndex(ALGOLIA_INDEX_NAME);
-        return index.saveObject(topic);
+        client.initIndex('post');
+        const response = await axios.get(
+            'https://us-central1-health-e-api.cloudfunctions.net/addPostsoAlgolia',
+        );
+        return response;
     });
 
 exports.onUserCreated = functions.firestore
-    .document('users/{userId}')
-    .onCreate((snap, context) => {
-        const user = snap.data();
+    .document('users/{id}')
+    .onCreate(async (snapshot, context) => {
+        const user = snapshot.data();
         user.objectID = context.params.topicId;
         const client = algoliasearch(ALGOLIA_ID, ALGOLIA_ADMIN_KEY);
-        const index = client.initIndex(ALGOLIA_INDEX_NAME);
-        return index.saveObject(user);
+        client.initIndex(ALGOLIA_INDEX_NAME);
+        const response = await axios.get(
+            'https://us-central1-health-e-api.cloudfunctions.net/addUserToAlgolia',
+        );
+        return response;
     });
 
-exports.onUserCreated = functions.firestore
-    .document('posts/{postId}')
-    .onCreate((snap, context) => {
-        const post = snap.data();
-        post.objectID = context.params.topicId;
+exports.onTopicCreated = functions.firestore
+    .document('topics/{id}')
+    .onCreate(async (snapshot, context) => {
+        const topics = snapshot.data();
+        topics.objectID = context.params.topicId;
         const client = algoliasearch(ALGOLIA_ID, ALGOLIA_ADMIN_KEY);
-        const index = client.initIndex(ALGOLIA_INDEX_NAME);
-        return index.saveObject(post);
+        client.initIndex('topics');
+        const response = await axios.get(
+            'https://us-central1-health-e-api.cloudfunctions.net/addTopicsToAlgolia',
+        );
+        return response;
     });
 
 const createLikeTopicNotification = async (snapshot, doc) => {
