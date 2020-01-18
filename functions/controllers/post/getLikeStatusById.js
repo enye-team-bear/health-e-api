@@ -11,7 +11,7 @@ const likeStatus = async (req, res, likeState) => {
 
 const getLikeStatus = async (req, res, db) => {
     const doc = await db.doc(`/likes/${req.params.postId}`)
-        .where('userId', '==', req.user.userName).get();
+        .where('userName', '==', req.user.userName).get();
     let likeState = false;
     if (!doc.exists) {
         return likeStatus(req, res, likeState);

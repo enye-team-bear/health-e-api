@@ -11,7 +11,7 @@ const commentLikeStatus = async (req, res, commentLikeState) => {
 
 const getcommentLikeStatus = async (req, res, db) => {
     const doc = await db.doc(`/likeComment/${req.params.postId}`)
-        .where('userId', '==', req.user.userName).get();
+        .where('userName', '==', req.user.userName).get();
     let commentLikeState = false;
     if (!doc.exists) {
         return commentLikeStatus(req, res, commentLikeState);
