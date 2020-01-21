@@ -29,6 +29,8 @@ const {
     getTopic,
 } = require('../controllers/topic/index');
 
+const { sendMessage } = require('../controllers/message/index');
+
 const {
     newPost,
     getPostId,
@@ -70,6 +72,7 @@ router.post('/new_post', authGuard, newPost);
 router.get('/posts', getPosts);
 router.get('/comment/:commentId/like', authGuard, likeComments);
 router.get('/comment/:commentId/unlike', authGuard, unlikeComments);
+router.post('/message/:recieverId', authGuard, sendMessage);
 
 // notification route
 
