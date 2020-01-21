@@ -11,6 +11,7 @@ exports.message = {
     authUserNotFound: 'auth/user-not-found',
     authWrongPassword: 'auth/wrong-password',
     cannotFollowSelf: 'Cannot follow Yourself',
+    chatSessionDoesnotExist: 'Chat Session Does not Exist',
     commentAddSuccessful: 'Comment was added successfully',
     commentAlreadyLiked: 'Comment Already Liked',
     commentNotLiked: 'Comment Not Liked',
