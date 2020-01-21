@@ -27,6 +27,8 @@ exports.api = functions.https.onRequest(app);
 const { ALGOLIA_ID, ALGOLIA_ADMIN_KEY } = process.env;
 const ALGOLIA_INDEX_NAME = 'topics';
 
+const client = algoliasearch(ALGOLIA_ID, ALGOLIA_ADMIN_KEY);
+
 exports.addTopicsToAlgolia = functions.https.onRequest(async (req, res) => {
     const arr = [];
     const docs = await db.collection('topics').get();
@@ -35,7 +37,6 @@ exports.addTopicsToAlgolia = functions.https.onRequest(async (req, res) => {
         user.objectID = doc.id;
         arr.push(user);
     });
-    const client = algoliasearch(ALGOLIA_ID, ALGOLIA_ADMIN_KEY);
     const index = client.initIndex(ALGOLIA_INDEX_NAME);
 
     index.saveObjects(arr, (err, content) => {
@@ -51,7 +52,6 @@ exports.addUserToAlgolia = functions.https.onRequest(async (req, res) => {
         user.objectID = doc.id;
         arr.push(user);
     });
-    const client = algoliasearch(ALGOLIA_ID, ALGOLIA_ADMIN_KEY);
     const index = client.initIndex('user');
 
     index.saveObjects(arr, (err, content) => {
@@ -67,7 +67,6 @@ exports.addPostsoAlgolia = functions.https.onRequest(async (req, res) => {
         post.objectID = doc.id;
         arr.push(post);
     });
-    const client = algoliasearch(ALGOLIA_ID, ALGOLIA_ADMIN_KEY);
     const index = client.initIndex('post');
 
     index.saveObjects(arr, (err, content) => {
@@ -80,7 +79,6 @@ exports.onPostCreated = functions.firestore
     .onCreate(async (snapshot, context) => {
         const post = snapshot.data();
         post.objectID = context.params.id;
-        const client = algoliasearch(ALGOLIA_ID, ALGOLIA_ADMIN_KEY);
         client.initIndex('post');
         const response = await axios.get(
             'https://us-central1-health-e-api.cloudfunctions.net/addPostsoAlgolia',
@@ -93,7 +91,6 @@ exports.onUserCreated = functions.firestore
     .onCreate(async (snapshot, context) => {
         const user = snapshot.data();
         user.objectID = context.params.topicId;
-        const client = algoliasearch(ALGOLIA_ID, ALGOLIA_ADMIN_KEY);
         client.initIndex(ALGOLIA_INDEX_NAME);
         const response = await axios.get(
             'https://us-central1-health-e-api.cloudfunctions.net/addUserToAlgolia',
@@ -106,7 +103,6 @@ exports.onTopicCreated = functions.firestore
     .onCreate(async (snapshot, context) => {
         const topics = snapshot.data();
         topics.objectID = context.params.topicId;
-        const client = algoliasearch(ALGOLIA_ID, ALGOLIA_ADMIN_KEY);
         client.initIndex('topics');
         const response = await axios.get(
             'https://us-central1-health-e-api.cloudfunctions.net/addTopicsToAlgolia',
