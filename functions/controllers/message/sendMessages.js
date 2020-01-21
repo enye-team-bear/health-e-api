@@ -14,6 +14,15 @@ const errors = {
     },
 };
 
+const successMessage = {
+    success1: res => {
+        res.status(OK).json({
+            message: messageSent,
+            status: success,
+        });
+    },
+};
+
 const sendMessage = async (req, res, db) => {
     try {
         await db
@@ -22,14 +31,13 @@ const sendMessage = async (req, res, db) => {
             .set({
                 createdAt: new Date().toISOString(),
                 message: req.body.message,
+                read: false,
                 reciever: req.params.recieverId,
                 roomId: req.params.recieverId + req.user.uid,
                 sender: req.user.uid,
+                unread: true,
             });
-        return res.status(OK).json({
-            message: messageSent,
-            status: success,
-        });
+        return successMessage.success1(res);
     } catch (err) {
         return errors.error2(res);
     }
