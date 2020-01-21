@@ -19,6 +19,7 @@ exports.message = {
     imageUpdateSucces: 'image Uploaded successfully',
     mustBeValidEmail: 'Must be a valid email address',
     mustNotBeEmpty: 'Must not be Empty',
+    notificationRead: 'Notifications has Been Read',
     passwordMustMatch: 'Passwords must Match',
     postAlreadyLiked: 'Post Already Liked',
     postNotFound: 'Post Not Found',
