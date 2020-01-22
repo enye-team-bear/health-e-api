@@ -22,6 +22,8 @@ const {
     likeTop,
     unlikeTop,
     getTopic,
+    topicInterest,
+    updateTopicInterest,
 } = require('../controllers/topic/index');
 
 const {
@@ -69,5 +71,7 @@ router.get('/comment/:commentId/like', authGuard, likeComments);
 router.get('/comment/:commentId/unlike', authGuard, unlikeComments);
 router.get('/postLikeStatus/:postId', authGuard, getLikeStatusById);
 router.get('/commentLikeStatus/:commentId', authGuard, commentLikeStatusById);
+router.get('/topicsOfInterest', authGuard, topicInterest);
+router.post('/updateTopicsOfInterest', authGuard, updateTopicInterest);
 
 module.exports = router;

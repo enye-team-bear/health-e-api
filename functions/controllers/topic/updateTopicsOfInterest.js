@@ -25,11 +25,12 @@ const errorsReturn = res => {
 };
 
 const cleanDB = async (req, res, db, docu) => {
-    await db.doc(`/likeComment/${docu.docs[0].id}`).delete();
+    // delete current user topics of interest, to create a new one
+    await db.doc(`/topicsOfInterests/${docu.docs[0].id}`).delete();
     return createTopicsOfInterest(req, res, db);
 };
 
-const addTopicsOfInterest = async (req, res, db) => {
+const updateTopicsOfInterest = async (req, res, db) => {
     try {
         const docu = await db
             .collection('topicsOfInterests')
@@ -41,5 +42,5 @@ const addTopicsOfInterest = async (req, res, db) => {
 };
 
 module.exports = {
-    addTopicsOfInterest,
+    updateTopicsOfInterest,
 };

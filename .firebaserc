@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "health-e-api"
+    "default": "health-e-1015d",
+    "health-e-api": "health-e-1015d"
   }
 }
