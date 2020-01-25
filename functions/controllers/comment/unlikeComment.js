@@ -7,7 +7,7 @@ const { commentNotLiked, somethingWentWrong, commentNotFound } = message;
 let commentData;
 
 const unlikeComments = async (req, res, db, commentDoc, file) => {
-    await db.doc(`/likes/${file.docs[0].id}`).delete();
+    await db.doc(`/likeComment/${file.docs[0].id}`).delete();
     commentData.likeCount -= 1;
     await commentDoc.update({ likeCount: commentData.likeCount });
     return res.status(OK).json({ data: commentData, status: success });

@@ -27,18 +27,22 @@ const {
     likeTop,
     unlikeTop,
     getTopic,
+    topicInterest,
+    updateTopicInterest,
 } = require('../controllers/topic/index');
 
 const {
     newPost,
     getPostId,
     getPosts,
+    getLikeStatusById,
     comment,
     like,
     unlike,
 } = require('../controllers/post/index');
 
 const {
+    commentLikeStatusById,
     likeComments,
     unlikeComments,
 } = require('../controllers/comment/index');
@@ -70,6 +74,10 @@ router.post('/new_post', authGuard, newPost);
 router.get('/posts', getPosts);
 router.get('/comment/:commentId/like', authGuard, likeComments);
 router.get('/comment/:commentId/unlike', authGuard, unlikeComments);
+router.get('/postLikeStatus/:postId', authGuard, getLikeStatusById);
+router.get('/commentLikeStatus/:commentId', authGuard, commentLikeStatusById);
+router.get('/topicsOfInterest', authGuard, topicInterest);
+router.post('/updateTopicsOfInterest', authGuard, updateTopicInterest);
 
 // notification route
 
