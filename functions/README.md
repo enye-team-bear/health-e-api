@@ -169,5 +169,5 @@ Project Link: [https://github.com/enye-team-bear](https://github.com/enye-team-b
 - [Enye Tech](https://www.enye.tech/)
 
 
-[product-screenshot]: Screenshot.png
-[product-screenshot2]: Screenshot2.png
+[product-screenshot]: ../Screenshot.png
+[product-screenshot2]: ../Screenshot2.png
