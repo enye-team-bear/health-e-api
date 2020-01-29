@@ -29,7 +29,11 @@ const {
     getTopic,
 } = require('../controllers/topic/index');
 
-const { sendMessage, readMessage } = require('../controllers/message/index');
+const {
+    sendMessage,
+    readMessage,
+    editMessage,
+} = require('../controllers/message/index');
 
 const {
     newPost,
@@ -73,7 +77,8 @@ router.get('/posts', getPosts);
 router.get('/comment/:commentId/like', authGuard, likeComments);
 router.get('/comment/:commentId/unlike', authGuard, unlikeComments);
 router.post('/message/:recieverId', authGuard, sendMessage);
-router.put('/message/:roomId', authGuard, readMessage);
+router.get('/message/:roomId', authGuard, readMessage);
+router.put('/message/:messageId', authGuard, editMessage);
 
 // notification route
 
