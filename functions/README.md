@@ -5,7 +5,7 @@ Document your applications API and general usage
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
+  <a href="https://github.com/enye-team-bear/health-e-api">
     <img src="./logo.png" alt="Logo" width="80" height="80">
   </a>
 
@@ -14,14 +14,14 @@ Document your applications API and general usage
   <p align="center">
     A Firebase cloud Function Resful api with Node as third party library for http requests.. for the Health e social network Application
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
+    <a href="https://documenter.getpostman.com/view/8305764/SWLb9V2G?version=latest"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
+    <a href="https://github.com/enye-team-bear/health-e-api">View Demo</a>
     ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Report Bug</a>
+    <a href="https://github.com/enye-team-bear/health-e-api/issues">Report Bug</a>
     ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Request Feature</a>
+    <a href="https://github.com/enye-team-bear/health-e-api/issues">Request Feature</a>
   </p>
 </p>
 
@@ -46,37 +46,36 @@ Document your applications API and general usage
 ## About The Project
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
+[![Product Name Screen Shot][product-screenshot2]](https://example.com)
 
-There are many great README templates available on GitHub, however, I didn't find one that really suit my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need.
+As a Task for the Enye Tech cohort 3. we were tasked to build one of the ideas by the participants in Team bear so utilizing the acceptable stack by Enye for the project and using project template. this is the Restful api for the Health e application using firebase firebase cloud functions and Nodejs as third party library
 
-Here's why:
-
-- Your time should be focused on creating something amazing. A project that solves a problem and helps others
-- You shouldn't be doing the same tasks over and over like creating a README from scratch
-- You should element DRY principles to the rest of your life :smile:
-
-Of course, no one template will serve all projects since your needs may be different. So I'll be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue.
-
-A list of commonly used resources that I find helpful are listed in the acknowledgements.
 
 ### Built With
 
-This section should list any major frameworks that you built your project using. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
+with Firebase cloud functions and firebase cloudstore as the database of the choice the below are the packages and tools of choice for this project
 
-- [Bootstrap](https://getbootstrap.com)
-- [JQuery](https://jquery.com)
-- [Laravel](https://laravel.com)
+- [Firebase](https://firebase.google.com/)
+- [firebase cloud functions](https://firebase.google.com/)
+- [Nodejs](https://nodejs.org/en/)
+- [algoliasearch](https://www.algolia.com/)
+- [axios](https://www.npmjs.com/package/axios)
+- [busboy](https://www.npmjs.com/package/busboy)
+- [cors](https://www.npmjs.com/package/cors)
+- [dotenv](https://www.npmjs.com/package/dotenv)
+- [express](https://www.npmjs.com/package/express)
+- [http-status-codes](https://www.npmjs.com/package/http-status-codes)
+- [lodash](https://www.npmjs.com/package/lodash)
+- [jest](https://www.npmjs.com/package/jest)
+- [supertest](https://www.npmjs.com/package/supertest)
 
 <!-- GETTING STARTED -->
 
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+Setting up this project locally
 
 ### Prerequisites
-
-This is an example of how to list things you need to use the software and how to install them.
 
 - npm
 
@@ -86,32 +85,46 @@ npm install npm@latest -g
 
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+1. Get a firebase config key  at [Firebase](https://firebase.google.com/)
+
+2. Get a free  algolia account, and API key  at [Algolia](https://www.algolia.com/)
+3. Clone the repo
 
 ```sh
 git clone https://github.com/your_username_/Project-Name.git
 ```
 
-3. Install NPM packages
+4. cd into Functions in Bash
+```sh
+cd functions
+```
+
+5. Install NPM packages
 
 ```sh
 npm install
 ```
 
-4. Enter your API in `config.js`
+6. Enter your API in `.env` file
 
 ```JS
-const API_KEY = 'ENTER YOUR API';
+API_KEY=***********************
+AUTH_DOMAIN=***********************
+DATABASE_URL=***********************
+PROJECT_ID=***********************
+STORAGE_BUCKET=***********************
+MESSAGING_SENDER_ID=***********************
+APP_ID=***********************
+MEASUREMENT_ID=***********************
 ```
 
 <!-- USAGE EXAMPLES -->
 
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+This handles all the CRUD operations of the Health e Application
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+_For more examples, please refer to the [Documentation](https://documenter.getpostman.com/view/8305764/SWLb9V2G?version=latest)_
 
 <!-- ROADMAP -->
 
@@ -141,72 +154,20 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Contact
 
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
-
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
+Team Bear
+```
+> Moses
+> Gideon
+> Retzam
+```
+Project Link: [https://github.com/enye-team-bear](https://github.com/enye-team-bear)
 
 <!-- ACKNOWLEDGEMENTS -->
 
 ## Acknowledgements
 
-- [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
-- [Img Shields](https://shields.io)
-- [Choose an Open Source License](https://choosealicense.com)
-- [GitHub Pages](https://pages.github.com)
-- [Animate.css](https://daneden.github.io/animate.css)
-- [Loaders.css](https://connoratherton.com/loaders)
-- [Slick Carousel](https://kenwheeler.github.io/slick)
-- [Smooth Scroll](https://github.com/cferdinandi/smooth-scroll)
-- [Sticky Kit](http://leafo.net/sticky-kit)
-- [JVectorMap](http://jvectormap.com)
-- [Font Awesome](https://fontawesome.com)
+- [Enye Tech](https://www.enye.tech/)
 
-TODO: Put a quick description of the application here.
 
-## Usage
-
-TODO: Provide how to interact with your repo at a high level. This could include what REST endpoints exist and/or how to configure the application.
-
-### Installing dependencies
-
-```
-npm install
-```
-
-### Running tests
-
-To run our unit tests you can run:
-
-```
-npm run test
-```
-
-### Running lint
-
-To lint the code run:
-
-```
-npm run lint
-```
-
-```
-npm run lint -- --fix
-```
-
-fix all LF to CRF linting errors
-If you don't get any output that means your linting passed.
-
-## Additional Resources
-
-- [REPLACE ME](https://example.com) - Explanation of resource.
-
-> TODO: Provide some resources to read to help contextualize the problem this application addresses.
-
-## Authors
-
-Team Bear - _Initial work_
-
-> TODO: Put your name on the list.
-> Moses
-> Gideon
-> Retzam
+[product-screenshot]: Screenshot.png
+[product-screenshot2]: Screenshot2.png
