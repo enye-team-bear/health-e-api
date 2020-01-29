@@ -17,6 +17,7 @@ exports.message = {
     commmentNotFound: 'Comment Not Found',
     emailInUse: 'Email is Already in Use',
     imageUpdateSucces: 'image Uploaded successfully',
+    messageSent: 'Message sent successfully',
     mustBeValidEmail: 'Must be a valid email address',
     mustNotBeEmpty: 'Must not be Empty',
     notificationRead: 'Notifications has Been Read',

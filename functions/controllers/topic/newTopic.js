@@ -1,5 +1,4 @@
 const HttpStatus = require('http-status-codes');
-// const { validateCode } = require('../../util/validator');
 const { status, message } = require('../../util/constants');
 
 const { error, success } = status;
