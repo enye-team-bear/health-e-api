@@ -235,3 +235,16 @@ exports.createNotificationOnCommentLike = functions.firestore
                 }
             });
     });
+
+exports.createNotificationOnMessageRecieved = functions.firestore
+    .document('messages/{id}')
+    .onCreate(snapshot => {
+        db.doc(`messageNotifications/${snapshot.id}`).set({
+            createdAt: new Date().toISOString(),
+            messageId: snapshot.id,
+            read: false,
+            recipient: snapshot.data().reciever,
+            sender: snapshot.data().sender,
+            type: 'message',
+        });
+    });

@@ -36,9 +36,12 @@ const successMessage = {
 
 const edit = async (req, res, db) => {
     try {
-        await db.doc(`/messages/${req.params.messageId}`).update({
-            message: req.body.message,
-        });
+        await db.doc(`/messages/${req.params.messageId}`).set(
+            {
+                message: req.body.message,
+            },
+            { merge: true },
+        );
         return successMessage.success1(res);
     } catch (err) {
         return errors.error2(res);
