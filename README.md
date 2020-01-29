@@ -5,7 +5,7 @@ Document your applications API and general usage
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
+  <a href="https://github.com/enye-team-bear/health-e-api">
     <img src="./logo.png" alt="Logo" width="80" height="80">
   </a>
 
@@ -14,14 +14,14 @@ Document your applications API and general usage
   <p align="center">
     A Firebase cloud Function Resful api with Node as third party library for http requests.. for the Health e social network Application
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
+    <a href="https://documenter.getpostman.com/view/8305764/SWLb9V2G?version=latest"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
+    <a href="https://github.com/enye-team-bear/health-e-api">View Demo</a>
     ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Report Bug</a>
+    <a href="https://github.com/enye-team-bear/health-e-api/issues">Report Bug</a>
     ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Request Feature</a>
+    <a href="https://github.com/enye-team-bear/health-e-api/issues">Request Feature</a>
   </p>
 </p>
 
