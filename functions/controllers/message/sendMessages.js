@@ -23,8 +23,24 @@ const successMessage = {
     },
 };
 
+// eslint-disable-next-line max-lines-per-function
 const sendMessage = async (req, res, db) => {
     try {
+        const roomReverse = await db
+            .doc(`/rooms/${req.user.uid + req.params.recieverId}`)
+            .get();
+        if (roomReverse.data()) {
+            await db.collection('messages').add({
+                createdAt: new Date().toISOString(),
+                message: req.body.message,
+                read: false,
+                reciever: req.params.recieverId,
+                roomId: req.user.uid + req.params.recieverId,
+                sender: req.user.uid,
+                unread: true,
+            });
+            return successMessage.success1(res);
+        }
         await db.collection('messages').add({
             createdAt: new Date().toISOString(),
             message: req.body.message,
@@ -61,6 +77,13 @@ const sendMessages = async (req, res, db) => {
         const room = await db
             .doc(`/rooms/${req.params.recieverId + req.user.uid}`)
             .get();
+
+        const roomReverse = await db
+            .doc(`/rooms/${req.user.uid + req.params.recieverId}`)
+            .get();
+        if (roomReverse.data()) {
+            return sendMessage(req, res, db);
+        }
         if (room.data() === undefined) {
             return createRoom(req, res, db);
         }
