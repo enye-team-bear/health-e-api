@@ -45,7 +45,7 @@ const unlike = async (req, res, db) => {
 
 const unlikeComment = async (req, res, db) => {
     try {
-        return unlike(req, res, db);
+        await unlike(req, res, db);
     } catch (err) {
         return res
             .status(INTERNAL_SERVER_ERROR)

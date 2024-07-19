@@ -63,7 +63,7 @@ const loginUser = async (req, res) => {
     }
 
     try {
-        return login(req, res);
+        await login(req, res);
     } catch (err) {
         return errorsReturn(res, err);
     }

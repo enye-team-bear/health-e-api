@@ -39,9 +39,9 @@ const getTopic = async (req, res, db) => {
     return getCommentAndLikes(req, res, db, doc);
 };
 
-const getTopicById = (req, res, db) => {
+const getTopicById = async (req, res, db) => {
     try {
-        return getTopic(req, res, db);
+        await getTopic(req, res, db);
     } catch (err) {
         return res
             .status(INTERNAL_SERVER_ERROR)

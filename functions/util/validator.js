@@ -3,13 +3,12 @@
 const { message } = require('./constants');
 
 const isEmpty = string => {
-    if (string.trim() === '') return true;
-    return false;
+    return string.trim() === '';
 };
+
 const isEmail = email => {
-    const regEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (email.match(regEx)) return true;
-    return false;
+    const regEx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return email.match(regEx) ? true : false;
 };
 
 const { mustNotBeEmpty, passwordMustMatch, mustBeValidEmail } = message;

@@ -39,9 +39,9 @@ const getPost = async (req, res, db) => {
     return getCommentAndLikes(req, res, db, doc);
 };
 
-const getPostById = (req, res, db) => {
+const getPostById = async (req, res, db) => {
     try {
-        return getPost(req, res, db);
+        await getPost(req, res, db);
     } catch (err) {
         return res
             .status(INTERNAL_SERVER_ERROR)

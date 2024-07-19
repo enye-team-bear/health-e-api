@@ -15,7 +15,7 @@ const createTopic = async (req, res, db) => {
     return res.status(CREATED).json({ data: topic, status: success });
 };
 
-const errorsReturn = res => {
+const errorsReturn = (res, error) => {
     res.status(INTERNAL_SERVER_ERROR).json({
         message: somethingWentWrong,
         status: error,
@@ -31,7 +31,7 @@ const addTopic = async (req, res, db) => {
                 status: error,
             });
         }
-        return createTopic(req, res, db);
+        await createTopic(req, res, db);
     } catch (err) {
         return errorsReturn(res, err);
     }

@@ -30,7 +30,7 @@ const getTopic = async (res, db) => {
 
 const getAllTopics = async (req, res, db) => {
     try {
-        return getTopic(res, db);
+        await getTopic(res, db);
     } catch (err) {
         return res
             .status(INTERNAL_SERVER_ERROR)

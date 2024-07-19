@@ -22,7 +22,7 @@ const createTopic = async (req, res, db) => {
     return res.status(CREATED).json({ data: newTopic, status: success });
 };
 
-const errorsReturn = res => {
+const errorsReturn = (res, error) => {
     res.status(INTERNAL_SERVER_ERROR).json({
         message: somethingWentWrong,
         status: error,
@@ -50,7 +50,7 @@ const addTopic = async (req, res, db) => {
             .collection('topics')
             .where('topic', '==', topic)
             .get();
-        return check(req, res, db, docu, topic);
+        await check(req, res, db, docu, topic);
     } catch (err) {
         return errorsReturn(res, err);
     }

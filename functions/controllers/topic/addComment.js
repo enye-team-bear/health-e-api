@@ -35,7 +35,7 @@ const comment = async (req, res, db) => {
 
 const addComments = async (req, res, db) => {
     try {
-        return comment(req, res, db);
+        await comment(req, res, db);
     } catch (err) {
         return res
             .status(INTERNAL_SERVER_ERROR)

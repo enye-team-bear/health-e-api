@@ -50,7 +50,7 @@ const like = async (req, res, db) => {
 
 const likeComment = async (req, res, db) => {
     try {
-        return like(req, res, db);
+        await like(req, res, db);
     } catch (err) {
         return res
             .status(INTERNAL_SERVER_ERROR)

@@ -19,7 +19,7 @@ const createPost = async (req, res, db) => {
     return res.status(CREATED).json({ data: newPost, status: success });
 };
 
-const errorsReturn = res => {
+const errorsReturn = (res, error) => {
     res.status(INTERNAL_SERVER_ERROR).json({
         message: somethingWentWrong,
         status: error,
@@ -28,7 +28,7 @@ const errorsReturn = res => {
 const addPost = async (req, res, db) => {
     // ensure unique data
     try {
-        return createPost(req, res, db);
+        await createPost(req, res, db);
     } catch (err) {
         return errorsReturn(res, err);
     }

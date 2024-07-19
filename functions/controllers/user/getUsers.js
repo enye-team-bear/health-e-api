@@ -36,7 +36,7 @@ const getUser = async (res, db) => {
 
 const getAllUser = async (req, res, db) => {
     try {
-        return getUser(res, db);
+        await getUser(res, db);
     } catch (err) {
         return res
             .status(INTERNAL_SERVER_ERROR)

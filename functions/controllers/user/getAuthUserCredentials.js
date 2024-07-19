@@ -12,10 +12,7 @@ const mapUsers = async (res, users) => {
 const getUser = async (req, res, db) => {
     const { userName } = req.user;
     const usersName = userName;
-    const users = await db
-        .collection('users')
-        .doc(usersName)
-        .get();
+    const users = await db.collection('users').doc(usersName).get();
     if (!users) {
         return res
             .status(BAD_REQUEST)
@@ -26,7 +23,7 @@ const getUser = async (req, res, db) => {
 
 const getAuthUserCredentials = async (req, res, db) => {
     try {
-        return getUser(req, res, db);
+        await getUser(req, res, db);
     } catch (errors) {
         return res
             .status(INTERNAL_SERVER_ERROR)
